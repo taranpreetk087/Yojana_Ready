@@ -109,7 +109,7 @@
     </details>
     <details>
       <summary>{{ 'Is this an official replacement for fragmented government portals?' if lang == 'en' else 'Kya yeh alag-alag sarkari portals ka official replacement hai?' }}</summary>
-      <p>{{ 'No, this is an independent interoperability prototype built for the hackathon to solve citizen pain points caused by fragmented service delivery. Always submit your final applications through official government channels.' if lang == 'en' else 'Nahi, yeh fragmentation ki problem ko solve karne ke liye ek prototype hai. Antim aavedan official government channels ke through hi karein.' }}</p>
+      <p>{{ 'No, this is an independent interoperability prototype built to solve citizen pain points caused by fragmented service delivery. Always submit your final applications through official government channels use this as complementary service to make tasks easier' if lang == 'en' else 'Nahi, yeh fragmentation ki problem ko solve karne ke liye ek prototype hai. Antim aavedan official government channels ke through hi karein.' }}</p>
     </details>
   </div>
 </section>
@@ -121,7 +121,7 @@
   </p>
   <div style="display:flex;gap:1.25rem;justify-content:center;flex-wrap:wrap;">
     <a href="{{ url_for('eligibility_questionnaire') }}" class="btn" style="background:#fff;color:var(--brand-primary);box-shadow:0 10px 25px rgba(0,0,0,0.2);">
-      {{ 'Check Eligibility' if lang == 'en' else 'Patrata Jaanchein' }}
+      {{ 'Check My Eligibility' if lang == 'en' else 'Patrata Jaanchein' }}
     </a>
     <a href="{{ url_for('document_upload') }}" class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.4);">
       {{ 'Check My Documents' if lang == 'en' else 'Dastavez Jaanchein' }}
