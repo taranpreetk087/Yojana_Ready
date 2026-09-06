@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Yojana Ready, Know What Schemes You Qualify For{% endblock %}
+{% block title %}Yojana Ready - Know What You Qualify For{% endblock %}
 {% block content %}
 
 <div class="hero-wrapper">
@@ -10,15 +10,15 @@
 
     {% if lang == 'en' %}
     <h1>Check your documents before you apply.<br><span class="animate-gradient-text">Not after you get rejected.</span></h1>
-    <p class="lead">Most people miss out on government schemes simply because they don't know they exist or their application gets rejected over a small document mistake nobody warned them about. We help with both.</p>
+    <p class="lead">Most people miss out on government schemes simply because they don't know they exist, or their application gets rejected over a small document mistake nobody warned them about. We help with both.</p>
     {% else %}
     <h1>Apne dastavez apply karne se pehle jaanch lein.<br><span class="animate-gradient-text">Rejection hone ke baad nahi.</span></h1>
-    <p class="lead">Bahut se log sarkari yojanaon ka labh isliye nahi le paate kyunki unhe pata hi nahi hota ya dastavez ki chhoti si galti ke karan application reject ho jaati hai. Hum dono mein madad karte hain.</p>
+    <p class="lead">Bahut se log sarkari yojanaon ka labh isliye nahi le paate kyunki unhe pata hi nahi hota, ya dastavez ki chhoti si galti ke karan application reject ho jaati hai. Hum dono mein madad karte hain.</p>
     {% endif %}
 
     <div style="display:flex;gap:1rem;flex-wrap:wrap;">
       <a href="{{ url_for('eligibility_questionnaire') }}" class="btn btn-primary">
-        {{ 'Check What Schemes I Qualify For' if lang == 'en' else 'Meri Patrata Jaanchein' }} &rarr;
+        {{ 'Check What I Qualify For' if lang == 'en' else 'Meri Patrata Jaanchein' }} &rarr;
       </a>
       <a href="{{ url_for('document_upload') }}" class="btn btn-secondary">
         {{ 'Check My Documents' if lang == 'en' else 'Mere Dastavez Jaanchein' }}
@@ -27,10 +27,11 @@
   </div>
 
   <div class="hero-css-art fade-up delay-1">
+    <!-- Glowing Orbs (The Ambient Background) -->
     <div class="orb-1"></div>
     <div class="orb-2"></div>
     
-    <!-- glass cards on hero landing page -->
+    <!-- Floating Glass Cards (The Pure CSS Centerpiece) -->
     <div class="glass-floating-card card-top">
       <div style="background:#10B981; border-radius:50%; width:48px; height:48px; display:flex; align-items:center; justify-content:center; color:white;font-weight:700;">✓</div>
       <div>
@@ -56,7 +57,7 @@
     <div class="path-icon-wrapper">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
     </div>
-    <h3>{{ 'Check What Schemes I Qualify For' if lang == 'en' else 'Meri Patrata Jaanchein' }}</h3>
+    <h3>{{ 'Check What I Qualify For' if lang == 'en' else 'Meri Patrata Jaanchein' }}</h3>
     <p style="margin-top:0.5rem;">{{ 'Answer a few simple questions and see every scheme you may be eligible for.' if lang == 'en' else 'Kuch aasan sawalon ke jawab dein aur dekhein aap kis yojana ke liye eligible hain.' }}</p>
   </a>
 
@@ -65,7 +66,7 @@
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
     </div>
     <h3>{{ 'Check My Documents' if lang == 'en' else 'Mere Dastavez Jaanchein' }}</h3>
-    <p style="margin-top:0.5rem;">{{ 'Upload 2 to 4 documents and we will check if your name, date of birth, and address match before you submit them anywhere on the official portals' if lang == 'en' else 'Dastavez upload karein aur hum jaanchenge ki naam, janm tithi, aur pata match karte hain ya nahi.' }}</p>
+    <p style="margin-top:0.5rem;">{{ 'Upload 2 to 4 documents and we will check if your name, date of birth, and address match before you submit them anywhere.' if lang == 'en' else 'Dastavez upload karein aur hum jaanchenge ki naam, janm tithi, aur pata match karte hain ya nahi.' }}</p>
   </a>
 
   <a href="{{ url_for('rejection_decoder') }}" class="card path-card path-card-featured">
@@ -88,7 +89,7 @@
   <div class="card" style="background:var(--surface-subtle);border-left:6px solid var(--brand-primary);">
     <span class="category-tag">{{ 'Why this is different' if lang == 'en' else 'Yeh alag kyun hai' }}</span>
     <p style="margin:0;font-size:1.15rem;color:var(--text-primary);line-height:1.7;">
-      {{ 'Portals like MyScheme already tell you whether you are eligible for a scheme. Yojana Ready picks up from there, catching the document mismatches that cause silent rejections and helping you recover if a rejection happens anyway.' if lang == 'en' else 'MyScheme jaise portal aapko batate hain ki aap eligible hain ya nahi. Yojana Ready wahan se aage badhta hai, dastavez ki galtiyon ko application se pehle pakadta hai.' }}
+      {{ 'Portals like MyScheme already tell you whether you are eligible for a scheme. Yojana Ready picks up from there, catching the document mismatches that cause silent rejections, and helping you recover if a rejection happens anyway.' if lang == 'en' else 'MyScheme jaise portal aapko batate hain ki aap eligible hain ya nahi. Yojana Ready wahan se aage badhta hai, dastavez ki galtiyon ko application se pehle pakadta hai.' }}
     </p>
   </div>
 </section>
@@ -102,15 +103,15 @@
     </details>
     <details>
       <summary>{{ 'How is this different from MyScheme or UMANG?' if lang == 'en' else 'Yeh MyScheme se alag kaise hai?' }}</summary>
-      <p>{{ 'MyScheme and UMANG help you discover schemes and check eligibility, and are feature loaded which makes it's navigation difficult. We focus on what happens next: catching document errors before you apply and helping you recover if you are rejected providing end users system one point help, rather than fragmented services delivery among government platforms' if lang == 'en' else 'MyScheme yojana dhoondhne mein madad karta hai. Hum uske baad ki madad karte hain.' }}</p>
+      <p>{{ 'MyScheme and UMANG help you discover schemes and check eligibility. We focus on what happens next: catching document errors before you apply, and helping you recover if you are rejected.' if lang == 'en' else 'MyScheme yojana dhoondhne mein madad karta hai. Hum uske baad ki madad karte hain.' }}</p>
     </details>
     <details>
       <summary>{{ 'Is Yojana Ready an official government website?' if lang == 'en' else 'Kya Yojana Ready sarkari website hai?' }}</summary>
-      <p>{{ 'No, this is an independent citizen-support prototype built to complement and navigate official portals better, not replace them. ' if lang == 'en' else 'Nahi, yeh ek independent nagrik-sahayata prototype hai.' }}</p>
+      <p>{{ 'No, this is an independent citizen-support prototype built to complement official portals, not replace them. Always confirm final details on the official scheme portal.' if lang == 'en' else 'Nahi, yeh ek independent nagrik-sahayata prototype hai.' }}</p>
     </details>
     <details>
       <summary>{{ 'What happens if my rejection notice is unclear?' if lang == 'en' else 'Agar rejection notice samajh na aaye?' }}</summary>
-      <p>{{ "We will tell you honestly if we can't confidently identify the reason rather than guessing and point you to the scheme's official helpdesk instead." if lang == 'en' else 'Agar hum samajh nahi paate, hum saaf bata dete hain aur official governement scheme ke portal par bhejte hai' }}</p>
+      <p>{{ "We will tell you honestly if we can't confidently identify the reason rather than guessing, and point you to the scheme's official helpdesk instead." if lang == 'en' else 'Agar hum samajh nahi paate, hum saaf bata dete hain.' }}</p>
     </details>
   </div>
 </section>
@@ -118,7 +119,7 @@
 <section class="card" style="margin-top:6rem;background:var(--brand-gradient);color:white;text-align:center;padding:4rem 2rem;border:none;">
   <h2 style="color:white;margin:0 0 1rem 0;font-size:2.8rem;">{{ 'Verify Your Scheme Application Today' if lang == 'en' else 'Aaj Hi Apni Application Verify Karein' }}</h2>
   <p style="color:rgba(255,255,255,0.9);max-width:600px;margin:0 auto 2.5rem;font-size:1.2rem;">
-    {{ 'Stop wondering if your paperwork has a disqualifying error. Get reassurance in under 2 minutes.' if lang == 'en' else 'Do minute mein pata karein. ydi aapke document sahi aur poore hai ya nhi' }}
+    {{ 'Stop wondering if your paperwork has a disqualifying error. Get reassurance in under 2 minutes.' if lang == 'en' else 'Do minute mein pata karein.' }}
   </p>
   <div style="display:flex;gap:1.25rem;justify-content:center;flex-wrap:wrap;">
     <a href="{{ url_for('eligibility_questionnaire') }}" class="btn" style="background:#fff;color:var(--brand-primary);box-shadow:0 10px 25px rgba(0,0,0,0.2);">
