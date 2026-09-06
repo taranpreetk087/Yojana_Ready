@@ -27,11 +27,9 @@
   </div>
 
   <div class="hero-css-art fade-up delay-1">
-    <!-- Glowing Orbs (The Ambient Background) -->
     <div class="orb-1"></div>
     <div class="orb-2"></div>
     
-    <!-- Floating Glass Cards (The Pure CSS Centerpiece) -->
     <div class="glass-floating-card card-top">
       <div style="background:#10B981; border-radius:50%; width:48px; height:48px; display:flex; align-items:center; justify-content:center; color:white;font-weight:700;">✓</div>
       <div>
@@ -98,20 +96,20 @@
   <h2 style="text-align:center;margin-bottom:2.5rem;">{{ 'Frequently Asked Questions' if lang == 'en' else 'Aksar Poochhe Jaane Wale Sawal' }}</h2>
   <div style="display:flex;flex-direction:column;gap:1.25rem;max-width:900px;margin:0 auto;">
     <details>
-      <summary>{{ 'Do you store my documents?' if lang == 'en' else 'Kya aap mere dastavez store karte hain?' }}</summary>
-      <p>{{ 'No. Documents are processed only for the duration of your check and then discarded. They are never written to permanent storage.' if lang == 'en' else 'Nahi. Dastavez sirf check ke liye process hote hain, store nahi hote.' }}</p>
+      <summary>{{ 'How does Yojana Ready address digital platform fragmentation?' if lang == 'en' else 'Yojana Ready digital platforms ki fragmentation ko kaise dur karta hai?' }}</summary>
+      <p>{{ 'Government services are often siloed across separate portals for identity, income proofs, and scheme applications. Yojana Ready acts as an interoperable bridge, cross-auditing documents from different sources to ensure seamless consistency before you apply.' if lang == 'en' else 'Sarkari sevayein alag-alag portals par banti hain. Yojana Ready ek bridge ki tarah kaam karta hai jo aavedan se pehle alag-alag dastavezion ki consistency check karta hai.' }}</p>
     </details>
     <details>
-      <summary>{{ 'How is this different from MyScheme or UMANG?' if lang == 'en' else 'Yeh MyScheme se alag kaise hai?' }}</summary>
-      <p>{{ 'MyScheme and UMANG help you discover schemes and check eligibility. We focus on what happens next: catching document errors before you apply, and helping you recover if you are rejected.' if lang == 'en' else 'MyScheme yojana dhoondhne mein madad karta hai. Hum uske baad ki madad karte hain.' }}</p>
+      <summary>{{ 'How do you bridge data between independent government systems?' if lang == 'en' else 'Aap alag sarkari systems ke beech data ko kaise bridge karte hain?' }}</summary>
+      <p>{{ 'Because disparate systems lack real-time interoperability, we use OCR extraction to verify data fields (like Name and DOB) locally across your ID proofs and application forms, catching cross-system discrepancies instantly.' if lang == 'en' else 'Kyunki alag systems aapas mein real-time baat nahi karte, hum OCR extraction ka use karke aapke ID proofs aur forms ke data ko aapas mein match karte hain.' }}</p>
     </details>
     <details>
-      <summary>{{ 'Is Yojana Ready an official government website?' if lang == 'en' else 'Kya Yojana Ready sarkari website hai?' }}</summary>
-      <p>{{ 'No, this is an independent citizen-support prototype built to complement official portals, not replace them. Always confirm final details on the official scheme portal.' if lang == 'en' else 'Nahi, yeh ek independent nagrik-sahayata prototype hai.' }}</p>
+      <summary>{{ 'Do you store my identity data or cross-platform documents?' if lang == 'en' else 'Kya aap mera identity data ya cross-platform documents store karte hain?' }}</summary>
+      <p>{{ 'No. To maintain strict data privacy amidst multi-platform checks, all documents are processed securely in-memory during your active session and are immediately discarded.' if lang == 'en' else 'Nahi. Data privacy ko dhyan mein rakhte hue, sabhi documents sirf active session ke dauran process hote hain aur turant delete kar diye jaate hain.' }}</p>
     </details>
     <details>
-      <summary>{{ 'What happens if my rejection notice is unclear?' if lang == 'en' else 'Agar rejection notice samajh na aaye?' }}</summary>
-      <p>{{ "We will tell you honestly if we can't confidently identify the reason rather than guessing, and point you to the scheme's official helpdesk instead." if lang == 'en' else 'Agar hum samajh nahi paate, hum saaf bata dete hain.' }}</p>
+      <summary>{{ 'Is this an official replacement for fragmented government portals?' if lang == 'en' else 'Kya yeh alag-alag sarkari portals ka official replacement hai?' }}</summary>
+      <p>{{ 'No, this is an independent interoperability prototype built for the hackathon to solve citizen pain points caused by fragmented service delivery. Always submit your final applications through official government channels.' if lang == 'en' else 'Nahi, yeh fragmentation ki problem ko solve karne ke liye ek prototype hai. Antim aavedan official government channels ke through hi karein.' }}</p>
     </details>
   </div>
 </section>
