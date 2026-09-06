@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}My Case File - Yojana Ready{% endblock %}
+{% block content %}
+<div class="card fade-up" style="max-width:800px;margin:0 auto;">
+  <span class="category-tag">{{ 'Saved progress' if lang == 'en' else 'Aapki Pragati' }}</span>
+  <h1>{{ 'My Case File' if lang == 'en' else 'Mera Case File' }}</h1>
+  <p style="color:var(--text-secondary);font-size:1.1rem;margin-bottom:3rem;">
+    {{ 'One continuous record of everything you have checked in this session, so you can carry it to a Common Service Centre or share it with family helping you apply.' if lang == 'en' else 'Is session mein aapne jo bhi jaancha hai, uska ek record.' }}
+  </p>
+
+  <div style="display:flex;flex-direction:column;gap:1.75rem;">
+    <div style="display:flex;gap:1.5rem;padding:1.75rem;background:var(--surface-subtle);border-radius:var(--radius-md);border:1px solid var(--border-color);align-items:flex-start;">
+      <span class="step-circle" style="width:44px;height:44px;font-size:1.1rem;{% if case.eligibility_done %}background:var(--status-matched-bg);color:var(--status-matched-text);border-color:var(--status-matched-border);{% endif %} flex-shrink:0;">{{ '✓' if case.eligibility_done else '1' }}</span>
+      <div style="flex:1;">
+        <strong style="display:block;font-size:1.2rem;color:var(--text-primary);">{{ 'Eligibility Check' if lang == 'en' else 'Patrata Jaanch' }}</strong>
+        {% if case.eligibility_done %}
+          <p style="margin-top:0.5rem;color:var(--text-secondary);font-size:1.05rem;">{{ case.matched_count }} {{ 'scheme(s) matched' if lang == 'en' else 'yojana milin' }}{% if case.matched_names %}: <strong style="color:var(--text-primary);">{{ case.matched_names|join(', ') }}</strong>{% endif %}</p>
+        {% else %}
+          <p style="margin-top:0.5rem;color:var(--text-muted);font-size:1.05rem;">{{ 'Not done yet.' if lang == 'en' else 'Abhi nahi hua.' }} <a href="{{ url_for('eligibility_questionnaire') }}" style="color:var(--brand-primary);font-weight:700;text-decoration:none;">{{ 'Start now' if lang == 'en' else 'Shuru karein' }} &rarr;</a></p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div style="display:flex;gap:1.5rem;padding:1.75rem;background:var(--surface-subtle);border-radius:var(--radius-md);border:1px solid var(--border-color);align-items:flex-start;">
+      <span class="step-circle" style="width:44px;height:44px;font-size:1.1rem;{% if case.documents_done %}background:var(--status-matched-bg);color:var(--status-matched-text);border-color:var(--status-matched-border);{% endif %} flex-shrink:0;">{{ '✓' if case.documents_done else '2' }}</span>
+      <div style="flex:1;">
+        <strong style="display:block;font-size:1.2rem;color:var(--text-primary);">{{ 'Document Consistency Check' if lang == 'en' else 'Dastavez Jaanch' }}</strong>
+        {% if case.documents_done %}
+          <div style="margin-top:0.75rem;display:flex;align-items:center;gap:1rem;">
+            <span class="category-tag" style="margin:0;padding:0.35rem 1rem;">{{ case.documents_status|upper }}</span>
+            <span style="color:var(--text-secondary);font-weight:700;font-size:1.05rem;">{{ case.documents_score }} {{ 'checks passed' if lang == 'en' else 'jaanch pass hui' }}</span>
+          </div>
+        {% else %}
+          <p style="margin-top:0.5rem;color:var(--text-muted);font-size:1.05rem;">{{ 'Not done yet.' if lang == 'en' else 'Abhi nahi hua.' }} <a href="{{ url_for('document_upload') }}" style="color:var(--brand-primary);font-weight:700;text-decoration:none;">{{ 'Start now' if lang == 'en' else 'Shuru karein' }} &rarr;</a></p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div style="display:flex;gap:1.5rem;padding:1.75rem;background:var(--surface-subtle);border-radius:var(--radius-md);border:1px solid var(--border-color);align-items:flex-start;">
+      <span class="step-circle" style="width:44px;height:44px;font-size:1.1rem;{% if case.rejection_done %}background:var(--status-matched-bg);color:var(--status-matched-text);border-color:var(--status-matched-border);{% endif %} flex-shrink:0;">{{ '✓' if case.rejection_done else '3' }}</span>
+      <div style="flex:1;">
+        <strong style="display:block;font-size:1.2rem;color:var(--text-primary);">{{ 'Rejection Recovery' if lang == 'en' else 'Rejection Sahayata' }}</strong>
+        {% if case.rejection_done %}
+          <p style="margin-top:0.5rem;color:var(--text-secondary);font-size:1.05rem;">{{ case.rejection_title }}</p>
+        {% else %}
+          <p style="margin-top:0.5rem;color:var(--text-muted);font-size:1.05rem;">{{ 'Not applicable yet; only needed if you were rejected.' if lang == 'en' else 'Zaroorat nahi, sirf reject hone par.' }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if case.updated_at %}
+  <p style="font-size:0.95rem;color:var(--text-muted);margin-top:2.5rem;">{{ 'Last updated:' if lang == 'en' else 'Aakhri update:' }} {{ case.updated_at }}</p>
+  {% endif %}
+
+  <div style="margin-top:1.5rem;">
+    <a href="{{ url_for('case_file_download') }}" class="btn btn-primary btn-block" style="padding:1.25rem;font-size:1.1rem;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      {{ 'Download Printable Summary' if lang == 'en' else 'Summary Download Karein' }}
+    </a>
+  </div>
+</div>
+{% endblock %}

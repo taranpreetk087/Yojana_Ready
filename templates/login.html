@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Log In - Yojana Ready{% endblock %}
+{% block content %}
+<div class="card fade-up" style="max-width:480px;margin:5rem auto;padding:4rem 3rem;">
+  <div class="brand-mark" style="margin:0 auto 2rem;width:64px;height:64px;border-radius:20px;">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6l-9-4z"/></svg>
+  </div>
+  <h1 style="text-align:center;font-size:2.5rem;margin-bottom:0.5rem;">{{ 'Welcome Back' if lang == 'en' else 'Vaapas Swagat Hai' }}</h1>
+  <p style="text-align:center;color:var(--text-secondary);margin-bottom:2.5rem;font-size:1.1rem;">
+    {{ 'Log in to pick up your saved case file where you left off.' if lang == 'en' else 'Apna case file wapas dekhein.' }}
+  </p>
+
+  {% if error %}<div class="overall-banner mismatch" role="alert">{{ error }}</div>{% endif %}
+
+  <form method="POST" action="{{ url_for('login') }}">
+    <div class="form-group"><label for="username">{{ 'Username' if lang == 'en' else 'Username' }}</label><input type="text" id="username" name="username" required autocomplete="username"></div>
+    <div class="form-group"><label for="password">{{ 'Password' if lang == 'en' else 'Password' }}</label><input type="password" id="password" name="password" required autocomplete="current-password"></div>
+    <button type="submit" class="btn btn-primary btn-block" style="margin-top:1.5rem;padding:1.25rem;">{{ 'Log In' if lang == 'en' else 'Log In' }}</button>
+  </form>
+  <p style="text-align:center;margin-top:2rem;font-size:1rem;color:var(--text-secondary);">
+    {{ "Don't have an account?" if lang == 'en' else 'Account nahi hai?' }}
+    <a href="{{ url_for('register') }}" style="color:var(--brand-primary);font-weight:700;text-decoration:none;">{{ 'Sign up' if lang == 'en' else 'Sign up karein' }}</a>
+  </p>
+</div>
+{% endblock %}

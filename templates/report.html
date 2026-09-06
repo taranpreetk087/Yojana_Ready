@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Document Report - Yojana Ready{% endblock %}
+{% block content %}
+<div class="card fade-up" style="max-width:920px;margin:0 auto;">
+  <span class="category-tag">{{ 'Step 2 of 3' if lang == 'en' else 'Charan 2 mein se 3' }}</span>
+  <h1>{{ 'Your Document Consistency Report' if lang == 'en' else 'Dastavez Report' }}</h1>
+
+  <div style="display:flex;align-items:center;gap:1.5rem;padding:1.5rem;background:var(--surface-subtle);border-radius:var(--radius-md);border:1px solid var(--border-color);margin:1.5rem 0;">
+    <div style="width:80px;height:80px;border-radius:50%;background:conic-gradient(var(--brand-primary) {{ score.percent }}%, var(--border-color) 0);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-subtle);">
+      <div style="width:60px;height:60px;border-radius:50%;background:var(--surface-card);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;color:var(--text-primary);">
+        {{ score.passed }}/{{ score.total }}
+      </div>
+    </div>
+    <div>
+      <strong style="display:block;font-size:1.3rem;color:var(--text-primary);">{{ 'Application Readiness' if lang == 'en' else 'Aavedan Taiyaari' }}</strong>
+      <p style="margin:0.2rem 0 0;font-size:1rem;color:var(--text-secondary);">{{ 'checks passed across ' ~ (labels|length) ~ ' documents' if lang == 'en' else 'jaanch pura hua' }}</p>
+    </div>
+  </div>
+
+  {% if status == 'matched' %}
+  <div class="overall-banner matched" role="status">✅ {{ 'All checked fields match. You appear ready to apply.' if lang == 'en' else 'Sab kuch match karta hai.' }}</div>
+  {% elif status == 'mismatch' %}
+  <div class="overall-banner mismatch" role="alert">⚠ {{ 'We found a mismatch. Fixing this before you apply can prevent a rejection.' if lang == 'en' else 'Ek mismatch mila. Ise application se pehle theek karein.' }}</div>
+  {% else %}
+  <div class="overall-banner unreadable" role="alert">🔍 {{ "We couldn't read one or more fields clearly. Please retake the photo." if lang == 'en' else 'Kuch spasht nahi padha ja saka.' }}</div>
+  {% endif %}
+
+  {% if sequencing %}
+  <div class="fixit-box" style="border-left-color:var(--status-warning-border);background:var(--status-warning-bg);color:var(--status-warning-text);">
+    <strong style="display:block;margin-bottom:0.25rem;">{{ 'Fix this first:' if lang == 'en' else 'Pehle yeh theek karein:' }}</strong>
+    {{ sequencing }}
+  </div>
+  {% endif %}
+
+  <div style="display:flex;flex-direction:column;gap:1.5rem;margin-top:2.5rem;">
+    {% for row in report %}
+    <div style="padding:1.75rem;border-radius:var(--radius-md);border:1.5px solid {% if row.status == 'matched' %}var(--status-matched-border){% elif row.status == 'mismatch' %}var(--status-mismatch-border){% else %}var(--border-color){% endif %};background:var(--surface-card);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <strong style="font-size:1.2rem;color:var(--text-primary);">{{ row.field }}</strong>
+        <span class="category-tag" style="margin:0;{% if row.status == 'matched' %}background:var(--status-matched-bg);color:var(--status-matched-text);border:none;{% elif row.status == 'mismatch' %}background:var(--status-mismatch-bg);color:var(--status-mismatch-text);border:none;{% endif %}">{{ row.status }}</span>
+      </div>
+      <div style="font-size:1rem;color:var(--text-secondary);background:var(--surface-subtle);padding:1rem 1.25rem;border-radius:var(--radius-sm);">
+        {% for v in row.doc_values %}<strong>{{ v.label }}:</strong> {{ v.value }}{% if not loop.last %} &nbsp;&bull;&nbsp; {% endif %}{% endfor %}
+      </div>
+      <p style="margin-top:1rem;font-size:1.05rem;color:var(--text-primary);">{{ row.explanation }}</p>
+      {% if row.mismatch_type and row.mismatch_type in mismatch_guide %}
+      <div class="fixit-box" style="margin-top:1.5rem;">
+        <strong style="font-size:1.05rem;color:var(--text-primary);">{{ 'What to do next:' if lang == 'en' else 'Aage kya karein:' }}</strong>
+        <ol style="margin-top:0.75rem;font-size:1rem;">
+          {% for step in mismatch_guide[row.mismatch_type].steps %}<li>{{ step }}</li>{% endfor %}
+        </ol>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <div style="margin-top:3rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
+    <a href="{{ url_for('document_upload') }}" class="btn btn-outline">{{ "I've Fixed It: Recheck" if lang == 'en' else 'Dobara Jaanchein' }}</a>
+    <a href="{{ url_for('eligibility_questionnaire') }}" class="btn btn-primary">{{ 'Check Scheme Eligibility' if lang == 'en' else 'Patrata Jaanchein' }}</a>
+    <a href="{{ url_for('case_file_view') }}" class="btn btn-secondary">{{ 'View My Case File' if lang == 'en' else 'Case File Dekhein' }}</a>
+  </div>
+</div>
+{% endblock %}

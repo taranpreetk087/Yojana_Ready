@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Rejection Explained - Yojana Ready{% endblock %}
+{% block content %}
+<div class="card fade-up" style="max-width:860px;margin:0 auto;">
+  <span class="category-tag">{{ 'Rejection decoded' if lang == 'en' else 'Rejection Samjha Gaya' }}</span>
+  <h1>{{ 'Here Is What This Likely Means' if lang == 'en' else 'Iska Matlab Yeh Ho Sakta Hai' }}</h1>
+  {% if scheme_name %}<p style="color:var(--text-muted);margin-bottom:2rem;font-size:1.15rem;">{{ 'For:' if lang == 'en' else 'Yojana:' }} <strong style="color:var(--text-primary);">{{ scheme_name }}</strong></p>{% endif %}
+
+  <div class="overall-banner {{ 'unreadable' if category_id == 'unclear' else 'mismatch' }}" style="padding:1.5rem;font-size:1.15rem;">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+      {% if category_id == 'unclear' %}<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>{% else %}<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>{% endif %}
+    </svg>
+    <span>{{ title }}</span>
+  </div>
+
+  <p style="line-height:1.7;font-size:1.15rem;color:var(--text-primary);margin:2rem 0;">{{ explanation }}</p>
+
+  <div class="fixit-box" style="padding:2rem;">
+    <strong style="display:block;margin-bottom:1rem;font-size:1.15rem;color:var(--text-primary);">{{ 'What to do next:' if lang == 'en' else 'Aage kya karein:' }}</strong>
+    <ol style="font-size:1.1rem;line-height:1.75;">
+      {% for step in steps %}<li>{{ step }}</li>{% endfor %}
+    </ol>
+  </div>
+
+  <div style="margin-top:4rem;padding-top:3rem;border-top:1px solid var(--border-color);">
+    <h2>{{ 'Not sure this reason is fair?' if lang == 'en' else 'Kya yeh sahi nahi lagta?' }}</h2>
+    <p style="font-size:1.1rem;color:var(--text-secondary);margin-top:1rem;line-height:1.65;">
+      {{ "If, after reading this, you still believe the rejection was wrong, you have the right to file a formal grievance through the government's official grievance portal (CPGRAMS). We can help you draft it." if lang == 'en' else 'Agar aapko lagta hai yeh galat hai, aap CPGRAMS par shikayat darj kar sakte hain. Hum draft karne mein madad kar sakte hain.' }}
+    </p>
+
+    <div style="display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:2.5rem;">
+      {% if recommend_document_check %}
+      <a href="{{ url_for('document_upload') }}" class="btn btn-primary">{{ 'Recheck My Documents First' if lang == 'en' else 'Pehle Dastavez Jaanchein' }}</a>
+      {% endif %}
+      <a href="{{ url_for('grievance_assistant') }}" class="btn btn-secondary">{{ 'I Believe This Was Wrong: Help Me File a Grievance' if lang == 'en' else 'Yeh Galat Hai: Shikayat Mein Madad Karein' }} &rarr;</a>
+    </div>
+  </div>
+  <p style="margin-top:2.5rem;font-size:0.95rem;color:var(--text-muted);">{{ 'This explanation is based on common rejection patterns, not an official reading of your specific case. Always cross-check with the exact wording of your notice.' if lang == 'en' else 'Yeh spashtikaran samanya patterns par aadharit hai, official jaankari nahi.' }}</p>
+</div>
+{% endblock %}

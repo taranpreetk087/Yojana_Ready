@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Check My Documents - Yojana Ready{% endblock %}
+{% block content %}
+<div class="overall-banner fade-up" style="background:var(--surface-subtle);border-color:var(--border-color);max-width:1140px;margin:0 auto 1.5rem;">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" stroke-width="2" style="flex-shrink:0;"><path d="M12 2L4 5v6c0 5.2 3.4 9.9 8 11 4.6-1.1 8-5.8 8-11V5l-8-3z"/></svg>
+  <span>
+    <strong>{{ '100% client-side pre-check' if lang == 'en' else '100% client-side pre-check' }}</strong> &middot;
+    {{ 'Your uploaded files are processed only for this check and never stored permanently.' if lang == 'en' else 'Aapke dastavez sirf jaanch ke liye process hote hain, store nahi hote.' }}
+  </span>
+</div>
+
+<div class="card fade-up delay-1" style="max-width:1140px;margin:0 auto;">
+  <span class="category-tag">{{ 'Pre-submission cross-verification' if lang == 'en' else 'Pre-submission jaanch' }}</span>
+  <h1>{{ 'Check My Documents' if lang == 'en' else 'Mere Dastavez Jaanchein' }}</h1>
+  <p class="lead" style="margin-bottom:1.5rem;">
+    {{ 'Add 2 to 4 documents (like Aadhaar, income certificate, caste certificate, bank passbook). We check if the name, date of birth, and address match across all of them before you submit anywhere official. The first document you add is treated as your primary ID proof.' if lang == 'en' else 'Kam se kam 2, adhiktam 4 dastavez jodein.' }}
+  </p>
+
+  {% if error %}<div class="overall-banner mismatch" role="alert">{{ error }}</div>{% endif %}
+
+  <form method="POST" enctype="multipart/form-data" action="{{ url_for('document_upload') }}">
+    <div class="upload-grid">
+      {% for n, default_label, required in [(1,'Aadhaar Card',true),(2,'Income Certificate',true),(3,'Caste Certificate',false),(4,'Bank Passbook',false)] %}
+      <div class="upload-box">
+        <span class="doc-tag">{{ 'Document ' ~ n if lang == 'en' else 'Dastavez ' ~ n }}{% if n == 1 %} &middot; {{ 'Primary ID' if lang == 'en' else 'Primary ID' }}{% endif %}</span>
+        <label for="doc{{n}}_label" style="font-weight:700;display:block;margin-bottom:0.5rem;">{{ default_label }}{% if not required %} <span style="font-weight:500;color:var(--text-muted);">({{ 'optional' if lang == 'en' else 'optional' }})</span>{% endif %}</label>
+        <input type="text" id="doc{{n}}_label" name="doc{{n}}_label" value="{{ default_label }}" placeholder="e.g. {{ default_label }}" style="margin-bottom:1.25rem;">
+        
+        <label for="doc{{n}}_file" class="sr-only">{{ 'Upload file for document ' ~ n }}</label>
+        <input type="file" id="doc{{n}}_file" name="doc{{n}}" accept="image/png, image/jpeg, application/pdf" style="font-size:0.95rem;border:none;padding:0;background:transparent;margin-bottom:1.25rem;">
+        
+        <div class="sample-picker" style="border-top:1px dashed var(--border-color);padding-top:1.25rem;margin-top:auto;">
+          <label for="doc{{n}}_sample" style="font-size:0.9rem;color:var(--text-muted);display:block;margin-bottom:0.5rem;">{{ 'Or load a sample document:' if lang == 'en' else 'Ya sample dastavez chunein:' }}</label>
+          <select id="doc{{n}}_sample" name="doc{{n}}_sample">
+            <option value="">{{ '• None •' if lang == 'en' else '• Koi nahi •' }}</option>
+            {% if n == 1 %}
+            <option value="sample_matched_aadhaar.png">Sample: Matching set - Aadhaar</option>
+            <option value="sample_mismatch_aadhaar.png">Sample: Mismatch set - Aadhaar</option>
+            {% elif n == 2 %}
+            <option value="sample_matched_income_cert.png">Sample: Matching set - Income Certificate</option>
+            <option value="sample_mismatch_scholarship_form.png">Sample: Mismatch set - Scholarship Form</option>
+            {% endif %}
+          </select>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <p style="font-size:0.95rem;color:var(--text-muted);margin-top:2rem;">⚠ {{ "Accepts JPG, PNG, or PDF files. Photo unclear? Retake it in good light with all four corners visible. Sample documents above are fictional and completely safe for testing. Never upload a real Aadhaar or ID document here." if lang == 'en' else 'JPG, PNG, ya PDF file de sakte hain. Agar photo dhundhli hai, use dobara achi roshni mein lein.' }}</p>
+    <button type="submit" class="btn btn-primary btn-block" style="margin-top:1.5rem;padding:1.25rem;">{{ 'Check My Documents' if lang == 'en' else 'Dastavez Jaanchein' }} &rarr;</button>
+  </form>
+</div>
+
+<div class="card fade-up delay-2" style="max-width:1140px;margin:2.5rem auto 0;">
+  <h2>{{ 'What We Check Across Your Documents' if lang == 'en' else 'Hum Kya Check Karte Hain' }}</h2>
+  <p style="color:var(--text-secondary);font-size:1.1rem;">{{ 'Common administrative mismatch triggers that lead to government scheme rejections:' if lang == 'en' else 'Aam galtiyaan jo rejection ka kaaran banti hain:' }}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:1.5rem;margin-top:2rem;">
+    <div style="padding:1.5rem;background:var(--surface-subtle);border-radius:var(--radius-md);border:1px solid var(--border-color);">
+      <strong style="color:var(--text-primary);display:block;font-size:1.15rem;">{{ 'Name & Initials Match' if lang == 'en' else 'Naam Match' }}</strong>
+      <p style="margin:0.5rem 0 0;font-size:1rem;">{{ 'Detects expanded names vs abbreviation mismatches and spelling typos.' if lang == 'en' else 'Naam ki spelling galtiyaan pakadta hai.' }}</p>
+    </div>
+    <div style="padding:1.5rem;background:var(--surface-subtle);border-radius:var(--radius-md);border:1px solid var(--border-color);">
+      <strong style="color:var(--text-primary);display:block;font-size:1.15rem;">{{ 'DOB Format Consistency' if lang == 'en' else 'DOB Match' }}</strong>
+      <p style="margin:0.5rem 0 0;font-size:1rem;">{{ 'Verifies date-of-birth alignment across every document.' if lang == 'en' else 'Janm tithi ka milaan karta hai.' }}</p>
+    </div>
+    <div style="padding:1.5rem;background:var(--surface-subtle);border-radius:var(--radius-md);border:1px solid var(--border-color);">
+      <strong style="color:var(--text-primary);display:block;font-size:1.15rem;">{{ 'Address & PIN Code' if lang == 'en' else 'Pata Match' }}</strong>
+      <p style="margin:0.5rem 0 0;font-size:1rem;">{{ 'Checks state, district, and address consistency.' if lang == 'en' else 'Pata match karta hai.' }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

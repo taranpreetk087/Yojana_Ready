@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}My Application Was Rejected - Yojana Ready{% endblock %}
+{% block content %}
+<div class="card fade-up" style="max-width:820px;margin:0 auto;">
+  <span class="category-tag" style="background:var(--status-warning-bg);color:var(--status-warning-text);border:none;">{{ 'Our core feature' if lang == 'en' else 'Hamari khaasiyat' }}</span>
+  <h1>{{ 'My Application Was Rejected' if lang == 'en' else 'Meri Application Reject Hui' }}</h1>
+  <p style="color:var(--text-secondary);font-size:1.1rem;margin-bottom:2.5rem;line-height:1.65;">
+    {{ "Paste the rejection message or notice you received below, in as much detail as you have. We will explain what it likely means in plain language and tell you exactly what to do next." if lang == 'en' else 'Apna rejection message neeche paste karein. Hum aasan bhasha mein samjhayenge.' }}
+  </p>
+
+  <form method="POST" action="{{ url_for('rejection_decoder') }}">
+    <div class="form-group">
+      <label for="scheme_id">{{ 'Which scheme was this for? (optional)' if lang == 'en' else 'Yeh kis yojana ke liye tha? (optional)' }}</label>
+      <select id="scheme_id" name="scheme_id">
+        <option value="">{{ '• Not sure / not listed •' if lang == 'en' else '• Pata nahi •' }}</option>
+        {% for s in schemes %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="rejection_text">{{ 'Paste the rejection notice or message' if lang == 'en' else 'Rejection message paste karein' }}</label>
+      <p class="hint">{{ 'You can copy this from an SMS, email, or the scheme portal, or tap the mic to speak it instead.' if lang == 'en' else 'SMS, email, ya portal se copy karein, ya mic dabakar bolein.' }}</p>
+      <div style="position:relative;">
+        <textarea id="rejection_text" name="rejection_text" required rows="6" style="padding-right:4rem;" placeholder="{{ 'e.g. Your application has been rejected as the details do not match your Aadhaar card...' if lang == 'en' else 'Udaharan: Aapki application reject ho gayi hai...' }}"></textarea>
+        <button type="button" id="rejection-mic" class="mic-btn" style="position:absolute;right:1rem;top:1rem;width:44px;height:44px;border:none;box-shadow:var(--shadow-subtle);" aria-label="Speak">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" style="margin-top:2.5rem;padding:1.25rem;">
+      {{ 'Decode My Rejection' if lang == 'en' else 'Rejection Samjhein' }} &rarr;
+    </button>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var micBtn = document.getElementById("rejection-mic");
+    var target = document.getElementById("rejection_text");
+    var lang = document.documentElement.getAttribute("data-lang") || "en";
+    if (micBtn && window.attachVoiceInput) window.attachVoiceInput(micBtn, target, lang);
+  });
+</script>
+{% endblock %}

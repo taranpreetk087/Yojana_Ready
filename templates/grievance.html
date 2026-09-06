@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Grievance Draft Assistant - Yojana Ready{% endblock %}
+{% block content %}
+<div class="card fade-up" style="max-width:820px;margin:0 auto;">
+  <span class="category-tag">{{ 'Step 3 of 3' if lang == 'en' else 'Charan 3 mein se 3' }}</span>
+  <h1>{{ 'Grievance Draft Assistant' if lang == 'en' else 'Shikayat Draft Sahayak' }}</h1>
+  <p style="color:var(--text-secondary);margin-bottom:2.5rem;font-size:1.1rem;line-height:1.65;">
+    {{ "Fill in a few details and we'll draft a clear, properly worded grievance for you to review, edit, and submit yourself on the official CPGRAMS portal. We never submit anything on your behalf." if lang == 'en' else 'Kuch details bharein, hum ek draft banayenge jise aap khud CPGRAMS par jama kar sakte hain.' }}
+  </p>
+
+  <form method="POST" action="{{ url_for('grievance_assistant') }}">
+    <div class="form-group">
+      <label for="name">{{ 'Your full name' if lang == 'en' else 'Aapka poora naam' }}</label>
+      <input type="text" id="name" name="name" required placeholder="e.g. Taranpreet Kaur">
+    </div>
+    <div class="form-group">
+      <label for="scheme_name">{{ 'Scheme name' if lang == 'en' else 'Yojana ka naam' }}</label>
+      <input type="text" id="scheme_name" name="scheme_name" required value="{{ prefill_scheme }}" placeholder="e.g. National Means-cum-Merit Scholarship Scheme">
+    </div>
+    <div class="form-group">
+      <label for="application_ref">{{ 'Application/reference number (if you have one)' if lang == 'en' else 'Application number (agar hai)' }}</label>
+      <input type="text" id="application_ref" name="application_ref" placeholder="e.g. APP2026XXXXX">
+    </div>
+    <div class="form-group">
+      <label for="reason_text">{{ 'Why do you believe the rejection was wrong?' if lang == 'en' else 'Aapko kyun lagta hai yeh galat tha?' }}</label>
+      <textarea id="reason_text" name="reason_text" required rows="5" placeholder="{{ 'Describe in your own words...' if lang == 'en' else 'Apne shabdon mein likhein...' }}"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block" style="margin-top:2rem;padding:1.25rem;">{{ 'Generate Draft' if lang == 'en' else 'Draft Banayein' }}</button>
+  </form>
+
+  {% if draft %}
+  <div style="margin-top:4rem;padding-top:3rem;border-top:1px solid var(--border-color);">
+    <h2>{{ 'Your Draft (review and edit before submitting)' if lang == 'en' else 'Aapka Draft (jama karne se pehle jaanch lein)' }}</h2>
+    <div class="fixit-box" style="margin-top:2rem;border:none;padding:2rem;background:var(--surface-subtle);border-radius:var(--radius-md);">
+      <textarea id="draft-text" rows="12" style="background:var(--surface-card);border:1px solid var(--border-color);font-size:1.05rem;line-height:1.75;border-radius:var(--radius-sm);">{{ draft }}</textarea>
+      
+      <p style="margin-top:1.5rem;font-size:1.05rem;color:var(--text-secondary);">
+        {{ 'This draft is for you to review and edit; we never submit it for you.' if lang == 'en' else 'Yeh draft aapke review ke liye hai -- hum ise submit nahi karte.' }}
+        {{ 'When ready, submit it yourself on the official portal:' if lang == 'en' else 'Taiyaar hone par, khud official portal par jama karein:' }}
+      </p>
+
+      <div style="margin-top:1.5rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
+        <button type="button" class="btn btn-primary" id="copy-draft-btn" onclick="navigator.clipboard.writeText(document.getElementById('draft-text').value); this.textContent='{{ 'Copied!' if lang == 'en' else 'Copy ho gaya!' }}';">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          {{ 'Copy Text' if lang == 'en' else 'Text Copy Karein' }}
+        </button>
+        <a href="{{ cpgrams_url }}" target="_blank" rel="noopener" class="btn btn-secondary">
+          {{ 'Go to CPGRAMS (Official Grievance Portal)' if lang == 'en' else 'CPGRAMS Par Jaayein' }} &nearr;
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

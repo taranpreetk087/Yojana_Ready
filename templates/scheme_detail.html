@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ scheme.name }} - Yojana Ready{% endblock %}
+{% block content %}
+<div class="fade-up" style="max-width:900px;margin:0 auto;">
+  <a href="{{ url_for('eligibility_results') }}" style="display:inline-flex;align-items:center;gap:0.5rem;color:var(--text-secondary);font-size:1.05rem;font-weight:700;text-decoration:none;margin-bottom:1.5rem;transition:var(--transition);">
+    &larr; {{ 'Back to results' if lang == 'en' else 'Wapas jaayein' }}
+  </a>
+
+  <div class="card">
+    <span class="category-tag">{{ scheme.category }}</span>
+    <h1>{{ scheme.name }}</h1>
+    <p class="lead" style="margin-bottom:2.5rem;">{{ scheme.description }}</p>
+
+    <h2>{{ 'Benefit' if lang == 'en' else 'Labh' }}</h2>
+    <div style="padding:1.5rem;background:var(--brand-gradient);border-radius:var(--radius-md);margin-bottom:3rem;color:white;box-shadow:var(--shadow-lift);">
+      <p style="font-size:1.25rem;color:white;margin:0;font-weight:700;">{{ scheme.benefit_summary }}</p>
+    </div>
+
+    <h2>{{ 'Eligibility Snapshot' if lang == 'en' else 'Patrata' }}</h2>
+    <div style="border:1px solid var(--border-color);border-radius:var(--radius-md);overflow:hidden;margin-top:1.5rem;background:var(--surface-subtle);">
+      <table style="width:100%;border-collapse:collapse;font-size:1.05rem;">
+        {% if scheme.min_age %}
+        <tr style="border-bottom:1px solid var(--border-color);"><td style="padding:1.25rem 1.5rem;width:40%;color:var(--text-secondary);font-weight:600;">{{ 'Minimum age' if lang == 'en' else 'Kam se kam umar' }}</td><td style="padding:1.25rem 1.5rem;font-weight:700;">{{ scheme.min_age }}</td></tr>
+        {% endif %}
+        {% if scheme.max_age %}
+        <tr style="border-bottom:1px solid var(--border-color);"><td style="padding:1.25rem 1.5rem;width:40%;color:var(--text-secondary);font-weight:600;">{{ 'Maximum age' if lang == 'en' else 'Adhiktam umar' }}</td><td style="padding:1.25rem 1.5rem;font-weight:700;">{{ scheme.max_age }}</td></tr>
+        {% endif %}
+        {% if scheme.income_max %}
+        <tr style="border-bottom:1px solid var(--border-color);"><td style="padding:1.25rem 1.5rem;width:40%;color:var(--text-secondary);font-weight:600;">{{ 'Max. annual family income' if lang == 'en' else 'Adhiktam saalana aay' }}</td><td style="padding:1.25rem 1.5rem;font-weight:700;">Rs. {{ "{:,}".format(scheme.income_max) }}</td></tr>
+        {% endif %}
+        <tr><td style="padding:1.25rem 1.5rem;width:40%;color:var(--text-secondary);font-weight:600;">{{ 'Other conditions' if lang == 'en' else 'Anya sharten' }}</td><td style="padding:1.25rem 1.5rem;font-weight:700;">{{ scheme.extra_conditions }}</td></tr>
+      </table>
+    </div>
+
+    <h2 style="margin-top:3.5rem;">{{ 'Documents You Will Need' if lang == 'en' else 'Zaroori Dastavez' }}</h2>
+    <ul style="margin-top:1.5rem;padding-left:1.5rem;line-height:1.8;color:var(--text-primary);font-size:1.1rem;font-weight:500;">
+      {% for doc in scheme.required_documents %}<li>{{ doc }}</li>{% endfor %}
+    </ul>
+
+    <div style="margin-top:4rem;display:flex;gap:1.25rem;flex-wrap:wrap;padding-top:2.5rem;border-top:1px solid var(--border-color);">
+      <a href="{{ url_for('document_upload') }}" class="btn btn-primary">
+        {{ 'Check My Documents for This' if lang == 'en' else 'Dastavez Jaanchein' }}
+      </a>
+      <a href="{{ scheme.application_link }}" target="_blank" rel="noopener" class="btn btn-secondary">
+        {{ 'Go to Official Application Page' if lang == 'en' else 'Official Page Par Jaayein' }} &nearr;
+      </a>
+    </div>
+    
+    <p style="margin-top:1.5rem;font-size:0.9rem;color:var(--text-muted);">
+      {{ 'Scheme details shown here are indicative. Always confirm the latest criteria and required documents on the official portal before applying.' if lang == 'en' else 'Yahan di gayi jaankari suchak hai. Kripya official portal par pushti karein.' }}
+    </p>
+  </div>
+</div>
+{% endblock %}

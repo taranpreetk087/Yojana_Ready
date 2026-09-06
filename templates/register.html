@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Sign Up - Yojana Ready{% endblock %}
+{% block content %}
+<div class="card fade-up" style="max-width:480px;margin:5rem auto;padding:4rem 3rem;">
+  <div class="brand-mark" style="margin:0 auto 2rem;width:64px;height:64px;border-radius:20px;">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6l-9-4z"/></svg>
+  </div>
+  <h1 style="text-align:center;font-size:2.5rem;margin-bottom:0.5rem;">{{ 'Create Your Account' if lang == 'en' else 'Account Banayein' }}</h1>
+  <p style="text-align:center;color:var(--text-secondary);margin-bottom:2.5rem;font-size:1.1rem;">
+    {{ 'So your case file is saved and ready whenever you come back.' if lang == 'en' else 'Taaki aapka case file surakshit rahe.' }}
+  </p>
+
+  {% if error %}<div class="overall-banner mismatch" role="alert">{{ error }}</div>{% endif %}
+
+  <form method="POST" action="{{ url_for('register') }}">
+    <div class="form-group"><label for="username">{{ 'Choose a username' if lang == 'en' else 'Username chunein' }}</label><input type="text" id="username" name="username" required autocomplete="username"></div>
+    <div class="form-group"><label for="password">{{ 'Choose a password' if lang == 'en' else 'Password chunein' }}</label><input type="password" id="password" name="password" required autocomplete="new-password" minlength="6"><p class="hint">{{ 'At least 6 characters.' if lang == 'en' else 'Kam se kam 6 characters.' }}</p></div>
+    <div class="form-group"><label for="confirm_password">{{ 'Confirm password' if lang == 'en' else 'Password dobara likhein' }}</label><input type="password" id="confirm_password" name="confirm_password" required autocomplete="new-password"></div>
+    <button type="submit" class="btn btn-primary btn-block" style="margin-top:1.5rem;padding:1.25rem;">{{ 'Sign Up' if lang == 'en' else 'Sign Up' }}</button>
+  </form>
+  <p style="text-align:center;margin-top:2rem;font-size:1rem;color:var(--text-secondary);">
+    {{ 'Already have an account?' if lang == 'en' else 'Pehle se account hai?' }}
+    <a href="{{ url_for('login') }}" style="color:var(--brand-primary);font-weight:700;text-decoration:none;">{{ 'Log in' if lang == 'en' else 'Log in karein' }}</a>
+  </p>
+</div>
+{% endblock %}

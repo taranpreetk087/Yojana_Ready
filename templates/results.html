@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Your Matched Schemes - Yojana Ready{% endblock %}
+{% block content %}
+<div class="fade-up" style="max-width:1140px;margin:0 auto;">
+  <span class="category-tag">{{ 'Your results' if lang == 'en' else 'Aapke Parinaam' }}</span>
+  <h1>{{ 'Schemes You May Qualify For' if lang == 'en' else 'Aapke liye Yojanaein' }}</h1>
+  <p class="lead" style="margin-bottom:3rem;">
+    {% if result.matched %}
+      {{ 'Based on your answers, you may qualify for %d scheme(s) below. Tap any scheme to see full details and required documents.' % result.matched|length if lang == 'en' else 'Aapke jawabon ke aadhar par, aap %d yojana(on) ke liye patra ho sakte hain.' % result.matched|length }}
+    {% else %}
+      {{ "You didn't match any scheme fully, but see the close matches below. A small change might make you eligible." if lang == 'en' else 'Koi poori tarah match nahi hui, lekin neeche kareebi yojanaein dekhein.' }}
+    {% endif %}
+  </p>
+
+  {% if result.matched %}
+  <div class="path-cards" style="margin-top:0;">
+    {% for s in result.matched %}
+    <a href="{{ url_for('scheme_detail', scheme_id=s.id) }}" class="card path-card" style="padding:2.5rem;">
+      <span class="category-tag">{{ s.category }}</span>
+      <h3>{{ s.name }}</h3>
+      <p style="margin-top:0.75rem;font-size:1.05rem;color:var(--text-secondary);">{{ s.benefit_summary }}</p>
+      <ul style="margin-top:1.5rem;padding-left:1.2rem;font-size:1rem;color:var(--brand-primary);font-weight:600;">
+        {% for reason in s.why[:2] %}<li>{{ reason }}</li>{% endfor %}
+      </ul>
+      <div style="margin-top:auto;padding-top:2rem;font-size:1.05rem;font-weight:700;color:var(--brand-primary);">
+        {{ 'View Details & Documents' if lang == 'en' else 'Pura Vivaran Dekhein' }} &rarr;
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="card" style="text-align:center;padding:5rem 2rem;">
+    <p style="font-size:1.2rem;">{{ 'No exact matches this time, but check the near-matches below.' if lang == 'en' else 'Is baar poora match nahi mila.' }}</p>
+  </div>
+  {% endif %}
+
+  {% if result.near_miss %}
+  <h2 style="margin-top:5rem;">{{ 'Close Matches: One Thing Is Blocking You' if lang == 'en' else 'Kareebi Yojanaein' }}</h2>
+  <div class="path-cards" style="margin-top:2rem;">
+    {% for s in result.near_miss %}
+    <div class="card" style="border:2px dashed var(--status-warning-border);background:var(--surface-subtle);padding:2.5rem;">
+      <span class="category-tag" style="background:var(--status-warning-bg);color:var(--status-warning-text);border:none;">{{ s.category }}</span>
+      <h3>{{ s.name }}</h3>
+      <p style="font-size:1.05rem;color:var(--text-secondary);">{{ s.benefit_summary }}</p>
+      <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:var(--surface-card);border-radius:var(--radius-sm);font-weight:700;font-size:1rem;color:var(--status-warning-text);border:1px solid var(--status-warning-border);">
+        ⚠ {{ s.blocking_reason }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div style="margin-top:5rem;text-align:center;">
+    <a href="{{ url_for('document_upload') }}" class="btn btn-primary btn-block" style="max-width:480px;padding:1.25rem;">
+      {{ 'Next: Check My Documents Before Applying' if lang == 'en' else 'Aage: Dastavez Jaanchein' }} &rarr;
+    </a>
+  </div>
+</div>
+{% endblock %}

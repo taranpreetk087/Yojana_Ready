@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Check Eligibility - Yojana Ready{% endblock %}
+{% block content %}
+<div class="card fade-up" style="max-width:720px;margin:0 auto;">
+  <span class="category-tag">{{ 'Step 1 of 3' if lang == 'en' else 'Charan 1 mein se 3' }}</span>
+  <h1>{{ 'Check What You Qualify For' if lang == 'en' else 'Patrata Jaanchein' }}</h1>
+  <p class="hint" style="margin-bottom:2rem;font-size:1.05rem;">{{ 'Just 5 quick questions. Nothing you enter here is stored.' if lang == 'en' else 'Sirf 5 sawal. Kuch bhi store nahi hota.' }}</p>
+
+  <div class="progress-bar" role="progressbar">
+    <div class="progress-seg"></div>
+    <div class="progress-seg"></div>
+    <div class="progress-seg"></div>
+    <div class="progress-seg"></div>
+    <div class="progress-seg"></div>
+  </div>
+
+  <form method="POST" action="{{ url_for('eligibility_questionnaire') }}">
+    <div class="q-step visible">
+      <div class="form-group">
+        <label>{{ '1. What is your age?' if lang == 'en' else '1. Aapki umar kya hai?' }}</label>
+        <p class="hint">{{ 'Enter your age in completed years.' if lang == 'en' else 'Poore varshon mein apni umar likhein.' }}</p>
+        <input type="number" name="age" min="0" max="110" required placeholder="e.g. 21">
+      </div>
+      <div class="step-nav"><span></span><button type="button" class="btn btn-primary next-btn">{{ 'Next' if lang == 'en' else 'Aage' }} &rarr;</button></div>
+    </div>
+    <div class="q-step">
+      <div class="form-group">
+        <label>{{ '2. What is your annual family income?' if lang == 'en' else '2. Aapke parivar ki saalana aay kitni hai?' }}</label>
+        <p class="hint">{{ 'Total yearly income of your family, in rupees. A rough estimate is fine.' if lang == 'en' else 'Aapke poore parivar ki saalana aay, rupaye mein.' }}</p>
+        <input type="number" name="income" min="0" required placeholder="e.g. 180000">
+      </div>
+      <div class="step-nav"><button type="button" class="btn btn-outline back-btn">&larr; {{ 'Back' if lang == 'en' else 'Peeche' }}</button><button type="button" class="btn btn-primary next-btn">{{ 'Next' if lang == 'en' else 'Aage' }} &rarr;</button></div>
+    </div>
+    <div class="q-step">
+      <div class="form-group">
+        <label>{{ '3. What is your gender?' if lang == 'en' else '3. Aapka ling kya hai?' }}</label>
+        <div class="radio-group">
+          <label class="radio-pill"><input type="radio" name="gender" value="male" required>{{ 'Male' if lang == 'en' else 'Purush' }}</label>
+          <label class="radio-pill"><input type="radio" name="gender" value="female">{{ 'Female' if lang == 'en' else 'Mahila' }}</label>
+          <label class="radio-pill"><input type="radio" name="gender" value="other">{{ 'Other' if lang == 'en' else 'Anya' }}</label>
+        </div>
+      </div>
+      <div class="step-nav"><button type="button" class="btn btn-outline back-btn">&larr; {{ 'Back' if lang == 'en' else 'Peeche' }}</button><button type="button" class="btn btn-primary next-btn">{{ 'Next' if lang == 'en' else 'Aage' }} &rarr;</button></div>
+    </div>
+    <div class="q-step">
+      <div class="form-group">
+        <label>{{ '4. What best describes your occupation?' if lang == 'en' else '4. Aapka vyavsaay kya hai?' }}</label>
+        <select name="occupation" required>
+          <option value="" disabled selected>{{ '• Select •' if lang == 'en' else '• Chunein •' }}</option>
+          {% for code, label in occupations.items() %}
+          <option value="{{ code }}">{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="step-nav"><button type="button" class="btn btn-outline back-btn">&larr; {{ 'Back' if lang == 'en' else 'Peeche' }}</button><button type="button" class="btn btn-primary next-btn">{{ 'Next' if lang == 'en' else 'Aage' }} &rarr;</button></div>
+    </div>
+    <div class="q-step">
+      <div class="form-group">
+        <label>{{ '5. Which category do you belong to?' if lang == 'en' else '5. Aap kis category se hain?' }}</label>
+        <p class="hint">{{ 'This helps match category-specific schemes. Select General if none apply.' if lang == 'en' else 'Yeh category-specific yojanaon ke liye madadgar hai.' }}</p>
+        <select name="category" required>
+          <option value="" disabled selected>{{ '• Select •' if lang == 'en' else '• Chunein •' }}</option>
+          {% for code, label in categories.items() %}
+          <option value="{{ code }}">{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="step-nav"><button type="button" class="btn btn-outline back-btn">&larr; {{ 'Back' if lang == 'en' else 'Peeche' }}</button><button type="submit" class="btn btn-primary">{{ 'See My Schemes' if lang == 'en' else 'Meri Yojanaein Dekhein' }} &rarr;</button></div>
+    </div>
+  </form>
+</div>
+{% endblock %}
