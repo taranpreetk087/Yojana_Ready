@@ -2,7 +2,7 @@
 <html lang="{{ lang }}" data-lang="{{ lang }}" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<!-- The maximum-scale=1.0 prevents the phone from auto-zooming -->
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>{% block title %}Yojana Ready{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -28,7 +28,6 @@
     </a>
 
     <nav class="main-nav">
-      <!-- Desktop Links (Hidden on Mobile) -->
       <div class="desktop-links">
         <a href="{{ url_for('eligibility_questionnaire') }}" class="nav-link">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.25rem;"><path d="M20 6L9 17l-5-5"/></svg>
@@ -40,11 +39,10 @@
         </a>
         <a href="{{ url_for('rejection_decoder') }}" class="nav-link">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.25rem;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          {{ 'Application Rejected?' if lang == 'en' else 'Application Reject Hui?' }}
+          {{ 'Application Rejected?' if lang == 'en' else 'Application Reject Hui? Yha Pta Krien' }}
         </a>
       </div>
       
-      <!-- Utilities (Always Visible) -->
       <div class="nav-utils">
         <span class="lang-toggle" aria-label="Language selection">
           <a href="{{ url_for('set_language', code='en') }}" class="{{ 'active' if lang == 'en' }}">EN</a>
@@ -67,12 +65,12 @@
 <div class="journey-stepper">
   <div class="journey-step {{ 'current' if journey_stage == 1 else 'done' }}">
     <span class="step-circle">{{ '✓' if journey_stage > 1 else '1' }}</span>
-    <span class="step-label">{{ 'Check Eligibility' if lang == 'en' else 'Patrata' }}</span>
+    <span class="step-label">{{ 'Check What Schemes are for you' if lang == 'en' else 'Patrata' }}</span>
   </div>
   <div class="step-connector {{ 'done' if journey_stage > 1 }}"></div>
   <div class="journey-step {{ 'current' if journey_stage == 2 else ('done' if journey_stage > 2 else '') }}">
     <span class="step-circle">{{ '✓' if journey_stage > 2 else '2' }}</span>
-    <span class="step-label">{{ 'Check Documents' if lang == 'en' else 'Dastavez' }}</span>
+    <span class="step-label">{{ 'Check Your Documents Here' if lang == 'en' else 'Dastavez' }}</span>
   </div>
   <div class="step-connector {{ 'done' if journey_stage > 2 }}"></div>
   <div class="journey-step {{ 'current' if journey_stage == 3 else '' }}">
@@ -113,7 +111,7 @@
   </div>
 </div>
 
-<!-- Mobile Bottom App Bar (Hidden on Desktop) -->
+<!-- Mobile bottom app bar -->
 <nav class="mobile-bottom-bar">
   <a href="{{ url_for('eligibility_questionnaire') }}">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
