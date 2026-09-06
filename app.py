@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
+
 """
-Yojana Ready -- Document Readiness & Rejection Risk Checker
-Smart India Hackathon 2026 project.
+Yojana Ready, Document Readiness & Rejection Risk Checker
+Smart India Hackathon 2026 project, Team "Tech Maniacs".
 
 A citizen-facing platform that goes beyond scheme eligibility checking to
-catch document errors before submission, and to help a citizen recover
-after a rejection -- the two stages no existing government portal
-currently covers.
+catch document errors before submission and to help a citizen recover
+after a rejection of an application
 """
 
 import os
@@ -33,7 +32,7 @@ init_auth_tables()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "yojana-ready-demo-secret-key-change-in-production")
-app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024  # 8 MB upload cap
+app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024  
 
 ALLOWED_EXT = {"png", "jpg", "jpeg", "pdf"}
 
@@ -44,7 +43,7 @@ def allowed_file(filename):
 def update_case_file(**kwargs):
     """
     Ties eligibility -> document check -> rejection recovery into one
-    continuous thread instead of three disconnected tools -- something
+    continuous thread instead of three disconnected tools, something
     neither MyScheme nor UMANG can offer, since neither has a document or
     rejection module to connect anything to in the first place.
 
@@ -80,7 +79,7 @@ def landing():
     return render_template("landing.html", scheme_count=len(get_all_schemes()))
 
 
-# ---------------- Authentication ----------------
+# Authentication
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -119,8 +118,7 @@ def login():
         session["user_id"] = user["id"]
         session["username"] = user["username"]
 
-        # Load this user's persisted case file into the session, so
-        # returning users see their prior progress, not a blank state.
+        # Load this user's persisted case file into the session so returning users see their prior progress, not a blank state.
         session["case_file"] = load_case_file(user["id"])
 
         next_url = request.args.get("next") or url_for("landing")
@@ -135,7 +133,7 @@ def logout():
     return redirect(url_for("landing"))
 
 
-# ---------------- Eligibility Checker ----------------
+# Eligibility Checker
 
 @app.route("/eligibility", methods=["GET", "POST"])
 def eligibility_questionnaire():
@@ -168,8 +166,6 @@ def eligibility_results():
         matched_names=[s["name"] for s in result["matched"][:5]],
     )
     return render_template("results.html", result=result, answers=answers, journey_stage=1)
-
-
 @app.route("/scheme/<scheme_id>")
 def scheme_detail(scheme_id):
     scheme = get_scheme(scheme_id)
@@ -177,9 +173,7 @@ def scheme_detail(scheme_id):
         return redirect(url_for("landing"))
     return render_template("scheme_detail.html", scheme=scheme, journey_stage=1)
 
-
-# ---------------- Document Consistency Checker ----------------
-
+# Document Consistency Checker 
 @app.route("/documents/upload", methods=["GET", "POST"])
 def document_upload():
     if request.method == "POST":
@@ -229,7 +223,7 @@ def document_report():
     return render_template("report.html", **data, mismatch_guide=MISMATCH_GUIDE, journey_stage=2)
 
 
-# ---------------- Post-Rejection Recovery (the core differentiator) ----------------
+# Post-Rejection Recovery (the core differentiator) Our main and unique feature
 
 @app.route("/rejection", methods=["GET", "POST"])
 def rejection_decoder():
@@ -276,8 +270,7 @@ def grievance_assistant():
     )
 
 
-# ---------------- Chatbot API ----------------
-
+# Chatbot API
 @app.route("/api/chat", methods=["POST"])
 def api_chat():
     message = request.json.get("message", "") if request.is_json else request.form.get("message", "")
@@ -285,8 +278,7 @@ def api_chat():
     return jsonify({"reply": reply})
 
 
-# ---------------- Case File (ties every module into one thread) ----------------
-
+# Case File 
 @app.route("/case-file")
 def case_file_view():
     case = session.get("case_file", {})
