@@ -4,7 +4,7 @@ Generates mock sample "documents" (as images) for demo/testing purposes.
 
 IMPORTANT: All names, ID numbers, and addresses below are entirely fictional,
 created for this project. Never use real ID documents (including a team
-member's own) anywhere in testing or a live demo -- see the Data Privacy
+member's own) anywhere in testing or a live demo,see the Data Privacy
 section of the project blueprint.
 """
 
@@ -43,7 +43,6 @@ def make_document(filename, header, fields, footer=""):
     print("Created", path)
 
 
-# ---- Set A: a clean, fully MATCHING pair ----
 make_document(
     "sample_matched_aadhaar.png",
     "GOVERNMENT OF INDIA - AADHAAR CARD (SAMPLE)",
@@ -68,7 +67,6 @@ make_document(
     footer="This is a fictional sample document created for demo/testing purposes only.",
 )
 
-# ---- Set B: a pair with a NAME + DOB mismatch, to demo the checker catching it ----
 make_document(
     "sample_mismatch_aadhaar.png",
     "GOVERNMENT OF INDIA - AADHAAR CARD (SAMPLE)",
