@@ -5,7 +5,7 @@
   <span class="category-tag">{{ 'Step 3 of 3' if lang == 'en' else 'Charan 3 mein se 3' }}</span>
   <h1>{{ 'Grievance Draft Assistant' if lang == 'en' else 'Shikayat Draft Sahayak' }}</h1>
   <p style="color:var(--text-secondary);margin-bottom:2.5rem;font-size:1.1rem;line-height:1.65;">
-    {{ "Fill in a few details and we'll draft a clear, properly worded grievance for you to review, edit, and submit yourself on the official CPGRAMS portal. We never submit anything on your behalf." if lang == 'en' else 'Kuch details bharein, hum ek draft banayenge jise aap khud CPGRAMS par jama kar sakte hain.' }}
+    {{ "Fill in a few details and we'll draft a clear, properly worded grievance for you to review, edit, and submit yourself on the official CPGRAMS portal directed here. We never submit anything on your behalf." if lang == 'en' else 'Kuch details bharein, hum ek draft banayenge jise aap khud CPGRAMS par jama kar sakte hain.' }}
   </p>
 
   <form method="POST" action="{{ url_for('grievance_assistant') }}">
@@ -35,8 +35,8 @@
       <textarea id="draft-text" rows="12" style="background:var(--surface-card);border:1px solid var(--border-color);font-size:1.05rem;line-height:1.75;border-radius:var(--radius-sm);">{{ draft }}</textarea>
       
       <p style="margin-top:1.5rem;font-size:1.05rem;color:var(--text-secondary);">
-        {{ 'This draft is for you to review and edit; we never submit it for you.' if lang == 'en' else 'Yeh draft aapke review ke liye hai -- hum ise submit nahi karte.' }}
-        {{ 'When ready, submit it yourself on the official portal:' if lang == 'en' else 'Taiyaar hone par, khud official portal par jama karein:' }}
+        {{ 'This draft is for you to review and edit, we never submit it for you.' if lang == 'en' else 'Yeh draft aapke review ke liye hai, hum ise submit nahi karte.' }}
+        {{ 'When ready, submit it yourself on the official portal directed here:' if lang == 'en' else 'Taiyaar hone par, khud official portal par jama karein:' }}
       </p>
 
       <div style="margin-top:1.5rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
