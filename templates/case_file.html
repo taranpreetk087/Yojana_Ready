@@ -5,7 +5,7 @@
   <span class="category-tag">{{ 'Saved progress' if lang == 'en' else 'Aapki Pragati' }}</span>
   <h1>{{ 'My Case File' if lang == 'en' else 'Mera Case File' }}</h1>
   <p style="color:var(--text-secondary);font-size:1.1rem;margin-bottom:3rem;">
-    {{ 'One continuous record of everything you have checked in this session, so you can carry it to a Common Service Centre or share it with family helping you apply.' if lang == 'en' else 'Is session mein aapne jo bhi jaancha hai, uska ek record.' }}
+    {{ 'One continuous record of everything you have checked in this session so you can carry it to a Common Service Centre or share it with family helping you apply again.' if lang == 'en' else 'Is session mein aapne jo bhi jaancha hai, uska ek record.' }}
   </p>
 
   <div style="display:flex;flex-direction:column;gap:1.75rem;">
@@ -43,7 +43,7 @@
         {% if case.rejection_done %}
           <p style="margin-top:0.5rem;color:var(--text-secondary);font-size:1.05rem;">{{ case.rejection_title }}</p>
         {% else %}
-          <p style="margin-top:0.5rem;color:var(--text-muted);font-size:1.05rem;">{{ 'Not applicable yet; only needed if you were rejected.' if lang == 'en' else 'Zaroorat nahi, sirf reject hone par.' }}</p>
+          <p style="margin-top:0.5rem;color:var(--text-muted);font-size:1.05rem;">{{ 'Not applicable yet, only needed if you were rejected.' if lang == 'en' else 'Zaroorat nahi, sirf reject hone par.' }}</p>
         {% endif %}
       </div>
     </div>
