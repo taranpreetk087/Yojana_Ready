@@ -253,3 +253,22 @@ details[open] summary::after { content: "−"; color: var(--brand-primary); }
   padding: 0.75rem 1.2rem; border-radius: 0 0 8px 0; font-weight: 700; text-decoration: none;
 }
 .skip-link:focus { left: 0; }
+
+/* Phones & Small Screens */
+@media (max-width: 768px) {
+  /* Stack the header so the logo and buttons don't crush each other */
+  .header-inner { flex-direction: column; gap: 1rem; text-align: center; }
+  .main-nav { flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+  
+  /* Shrink massive text and card padding to fit narrow screens */
+  h1 { font-size: 2.2rem; }
+  .card { padding: 1.5rem; }
+  .stat-strip { padding: 1.5rem; gap: 1.25rem; }
+  .stat-strip strong { font-size: 2.2rem; }
+  
+  /* Make buttons full-width for easier thumb tapping */
+  .hero-wrapper .btn { width: 100%; justify-content: center; }
+  
+  /* Hide the subtitle in the logo on phones to save space */
+  .brand-text small { display: none; }
+}
