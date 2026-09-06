@@ -5,7 +5,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap');
 
 :root {
-  /* --- LIGHT MODE --- */
   --bg-color: #F8FAFC;
   --bg-pattern: radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.08), transparent 25%),
                 radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08), transparent 25%);
@@ -50,7 +49,6 @@
 }
 
 [data-theme="dark"] {
-  /* --- DARK MODE --- */
   --bg-color: #0B1120;
   --bg-pattern: radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.15), transparent 25%),
                 radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.15), transparent 25%);
@@ -62,7 +60,6 @@
   --text-primary: #F8FAFC;
   --text-secondary: #CBD5E1;
   --text-muted: #94A3B8;
-  
   --shadow-glass: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
 
   --status-matched-bg: rgba(6, 95, 70, 0.25);
@@ -82,11 +79,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { background-color: var(--bg-color); background-image: var(--bg-pattern); background-attachment: fixed; color: var(--text-primary); font-family: var(--font-body); -webkit-font-smoothing: antialiased; min-height: 100vh; display: flex; flex-direction: column; }
 
-/* Fixed Layouts - Widened for large screens */
 .page-content, .header-inner, .footer-inner { width: 96% !important; max-width: 1600px !important; margin: 0 auto !important; padding-left: 0 !important; padding-right: 0 !important; }
 .page-content { padding-top: 2rem !important; padding-bottom: 5rem !important; }
 
-/* Header */
+/* Desktop Header */
 .site-header { position: sticky; top: 0; background: var(--surface-glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-glass); z-index: 1000; transition: var(--transition); }
 .header-inner { padding: 1rem 0 !important; display: flex; align-items: center; justify-content: space-between; }
 .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
@@ -94,25 +90,24 @@ body { background-color: var(--bg-color); background-image: var(--bg-pattern); b
 .brand-text strong { display: block; font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); }
 .brand-text small { display: block; font-size: 0.75rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
 
-/* Desktop Navigation */
 .main-nav { display: flex; align-items: center; gap: 1rem; flex: 1; justify-content: flex-end; }
-.nav-links { display: flex; align-items: center; gap: 0.5rem; }
+.desktop-links { display: flex; align-items: center; gap: 0.5rem; }
 .nav-utils { display: flex; align-items: center; gap: 0.75rem; }
 .nav-link { font-weight: 600; font-size: 0.95rem; color: var(--text-secondary); text-decoration: none; padding: 0.5rem 1rem; border-radius: var(--radius-pill); transition: var(--transition); display: inline-flex; align-items: center; }
 .nav-link:hover { color: var(--brand-primary); background: rgba(16, 185, 129, 0.08); }
-.nav-link svg { margin-right: 0.35rem; }
 .nav-cta { background: var(--brand-primary); color: white; padding: 0.6rem 1.4rem; border-radius: var(--radius-pill); font-weight: 700; text-decoration: none; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3); transition: var(--transition); }
 .nav-cta:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); filter: brightness(1.1); }
 .nav-user { width: 38px; height: 38px; border-radius: 50%; background: var(--brand-gradient); color: white; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none; }
 
 .theme-toggle-btn { background: var(--surface-subtle); border: 1px solid var(--border-color); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-primary); transition: var(--transition); }
-.theme-toggle-btn:hover { transform: rotate(20deg); border-color: var(--brand-primary); color: var(--brand-primary); }
-
+.theme-toggle-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
 .lang-toggle { background: var(--surface-subtle); border: 1px solid var(--border-color); padding: 4px; border-radius: var(--radius-pill); display: inline-flex; }
 .lang-toggle a { padding: 0.3rem 0.8rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-decoration: none; border-radius: var(--radius-pill); transition: var(--transition); }
 .lang-toggle a.active { background: var(--brand-primary); color: #FFFFFF; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
 
-/* Journey Stepper */
+.mobile-bottom-bar { display: none; } /* Hidden on desktop */
+
+/* Restored Journey Stepper */
 .journey-stepper { display: flex; align-items: center; justify-content: center; max-width: 800px; margin: 2rem auto 0; padding: 1rem; background: var(--surface-card); border-radius: var(--radius-pill); border: 1px solid var(--border-color); box-shadow: var(--shadow-glass); }
 .journey-step { display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted); }
 .step-circle { width: 34px; height: 34px; border-radius: 50%; background: var(--surface-subtle); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; transition: var(--transition); }
@@ -157,7 +152,9 @@ p { color: var(--text-secondary); font-size: 1rem; }
 .form-group { margin-bottom: 1.5rem; text-align: left; }
 .form-group label { display: block; font-weight: 700; font-size: 1rem; color: var(--text-primary); margin-bottom: 0.5rem; }
 .hint { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.75rem; }
-input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 1rem 1.25rem; font-family: var(--font-body); font-size: 1rem; color: var(--text-primary); background: var(--surface-subtle); border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); transition: var(--transition); }
+
+/* FIX: font-size 16px explicitly prevents auto-zooming on Mobile */
+input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 1rem 1.25rem; font-family: var(--font-body); font-size: 16px !important; color: var(--text-primary); background: var(--surface-subtle); border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); transition: var(--transition); }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); background: var(--surface-card); }
 select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1.25rem center; padding-right: 3rem; }
 
@@ -244,10 +241,7 @@ details[open] summary::after { content: "−"; color: var(--brand-primary); }
   .orb-1, .orb-2 { width: 200px; height: 200px; }
 }
 
-/* Accessibility utilities: visually hide content while keeping it available
-   to screen readers, and reveal a skip-to-content link only on keyboard
-   focus. Referenced in the templates; kept here so nothing renders as
-   stray visible text. */
+/* Accessibility utilities */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
@@ -259,19 +253,15 @@ details[open] summary::after { content: "−"; color: var(--brand-primary); }
 }
 .skip-link:focus { left: 0; }
 
-/* Phones & Small Screens: Native Bottom App Bar */
+/* ==========================================================================
+   MOBILE & SMALL SCREENS (The "Zoom & Clutter" Fixes)
+   ========================================================================== */
 @media (max-width: 768px) {
-  .header-inner { flex-wrap: wrap; padding: 0.5rem 0 !important; }
-  .brand-text strong { font-size: 1.15rem; }
-  .brand-text small { display: none; }
   
-  /* Keep utilities at top, shift slightly */
-  .main-nav { justify-content: flex-end; flex: 0; gap: 0.5rem; }
-  .nav-utils { gap: 0.5rem; }
-  .nav-cta { padding: 0.5rem 1rem; font-size: 0.9rem; }
-  
-  /* Morph navigation into a fixed bottom app bar */
-  .nav-links {
+  /* 1. Hide Desktop Links, Show Bottom App Bar */
+  .desktop-links { display: none; }
+  .mobile-bottom-bar {
+    display: flex;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -280,33 +270,48 @@ details[open] summary::after { content: "−"; color: var(--brand-primary); }
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border-top: 1px solid var(--border-glass);
-    padding: 0.5rem 0.5rem 1.25rem 0.5rem;
-    display: flex;
+    padding: 0.6rem 0.5rem 1.2rem 0.5rem; /* Extra bottom padding for phone swipe area */
     justify-content: space-around;
     z-index: 1000;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
   }
-  
-  /* Stack icons and text vertically for app look */
-  .nav-links a.nav-link {
+  .mobile-bottom-bar a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 0.7rem;
-    padding: 0.25rem;
-    background: transparent !important;
-    border: none !important;
+    font-size: 0.75rem;
+    font-weight: 600;
     color: var(--text-muted);
+    text-decoration: none;
+    gap: 0.25rem;
   }
-  .nav-links a.nav-link:hover { color: var(--brand-primary); }
-  .nav-links a.nav-link svg { margin-right: 0; margin-bottom: 0.25rem; width: 20px; height: 20px; }
+  .mobile-bottom-bar a:hover { color: var(--brand-primary); }
+  .mobile-bottom-bar svg { width: 22px; height: 22px; }
+
+  /* 2. Top Header Cleanup */
+  .header-inner { flex-direction: row; flex-wrap: nowrap; padding: 0.75rem 0 !important; }
+  .brand-text strong { font-size: 1.15rem; }
+  .brand-text small { display: none; }
+  .main-nav { flex: 0; justify-content: flex-end; }
+  .nav-utils { gap: 0.5rem; }
+  .nav-cta { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+
+  /* 3. Typography & Spacing (Un-zooming the massive text) */
+  h1 { font-size: 1.85rem; margin-bottom: 1rem; }
+  h2 { font-size: 1.6rem; }
+  .lead { font-size: 1rem; margin-bottom: 1.5rem; }
+  .card { padding: 1.25rem; }
+  .stat-strip { padding: 1.25rem; gap: 1rem; }
+  .stat-strip strong { font-size: 1.8rem; }
   
-  /* Content adjustments for mobile */
-  .page-content { padding-bottom: 6rem !important; } 
-  #chat-widget { bottom: 6.5rem; right: 1.5rem; } 
-  h1 { font-size: 2.2rem; }
-  .card { padding: 1.5rem; }
-  .stat-strip { padding: 1.5rem; gap: 1.25rem; }
-  .stat-strip strong { font-size: 2.2rem; }
-  .hero-wrapper .btn { width: 100%; justify-content: center; }
+  /* 4. Button & Stepper Fixes */
+  .btn { padding: 0.75rem 1.25rem; font-size: 0.95rem; width: 100%; justify-content: center; }
+  .journey-stepper { padding: 0.75rem; flex-wrap: wrap; }
+  .step-circle { width: 28px; height: 28px; font-size: 0.8rem; }
+  .step-label { font-size: 0.85rem; }
+
+  /* 5. Chat Orb De-clutter */
+  .page-content { padding-bottom: 6rem !important; } /* Clear space so content isn't under the app bar */
+  #chat-widget { bottom: 5rem; right: 1rem; } /* Shift up above the app bar */
+  #chat-toggle { width: 50px; height: 50px; } /* Shrink slightly so it doesn't cover buttons */
 }
