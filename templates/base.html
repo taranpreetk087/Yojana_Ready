@@ -27,37 +27,41 @@
     </a>
 
     <nav class="main-nav">
-      <a href="{{ url_for('eligibility_questionnaire') }}" class="nav-link">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.25rem;"><path d="M20 6L9 17l-5-5"/></svg>
-        {{ 'Check Eligibility' if lang == 'en' else 'Patrata Jaanchein' }}
-      </a>
-      <a href="{{ url_for('document_upload') }}" class="nav-link">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.25rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        {{ 'Check Documents' if lang == 'en' else 'Dastavez Jaanchein' }}
-      </a>
-      <a href="{{ url_for('rejection_decoder') }}" class="nav-link">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.25rem;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        {{ 'Application Rejected?' if lang == 'en' else 'Application Reject Hui?' }}
-      </a>
-      <a href="{{ url_for('case_file_view') }}" class="nav-link">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.25rem;"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
-        {{ 'My Case File' if lang == 'en' else 'Mera Case File' }}
-      </a>
+      <!-- These become the Bottom App Bar on Mobile -->
+      <div class="nav-links">
+        <a href="{{ url_for('eligibility_questionnaire') }}" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>{{ 'Eligibility' if lang == 'en' else 'Patrata' }}</span>
+        </a>
+        <a href="{{ url_for('document_upload') }}" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>{{ 'Documents' if lang == 'en' else 'Dastavez' }}</span>
+        </a>
+        <a href="{{ url_for('rejection_decoder') }}" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>{{ 'Rejected?' if lang == 'en' else 'Reject?' }}</span>
+        </a>
+        <a href="{{ url_for('case_file_view') }}" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          <span>{{ 'Case File' if lang == 'en' else 'Case File' }}</span>
+        </a>
+      </div>
       
-      <span class="lang-toggle" aria-label="Language selection">
-        <a href="{{ url_for('set_language', code='en') }}" class="{{ 'active' if lang == 'en' }}">EN</a>
-        <a href="{{ url_for('set_language', code='hi') }}" class="{{ 'active' if lang == 'hi' }}">हिं</a>
-      </span>
-
-      <button type="button" class="theme-toggle-btn" id="theme-toggle">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      </button>
-
-      {% if current_user %}
-      <a href="{{ url_for('logout') }}" class="nav-user" title="{{ current_user.username }} (Log Out)" aria-label="Log out of {{ current_user.username }}">{{ current_user.username[0]|upper }}</a>
-      {% else %}
-      <a href="{{ url_for('login') }}" class="nav-cta">{{ 'Log In' if lang == 'en' else 'Log In' }}</a>
-      {% endif %}
+      <!-- These stay at the Top on Mobile -->
+      <div class="nav-utils">
+        <span class="lang-toggle" aria-label="Language selection">
+          <a href="{{ url_for('set_language', code='en') }}" class="{{ 'active' if lang == 'en' }}">EN</a>
+          <a href="{{ url_for('set_language', code='hi') }}" class="{{ 'active' if lang == 'hi' }}">हिं</a>
+        </span>
+        <button type="button" class="theme-toggle-btn" id="theme-toggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        {% if current_user %}
+        <a href="{{ url_for('logout') }}" class="nav-user" title="{{ current_user.username }} (Log Out)">{{ current_user.username[0]|upper }}</a>
+        {% else %}
+        <a href="{{ url_for('login') }}" class="nav-cta">{{ 'Log In' if lang == 'en' else 'Log In' }}</a>
+        {% endif %}
+      </div>
     </nav>
   </div>
 </header>
