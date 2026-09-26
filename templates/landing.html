@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Yojana Ready - Know What You Qualify For{% endblock %}
+{% block content %}
+
+<div class="hero-wrapper">
+  <div class="fade-up">
+    <div class="category-tag">
+      {{ 'Free Document Pre-Check · Your Privacy Stays Protected' if lang == 'en' else 'मुफ्त दस्तावेज़ जांच · आपकी निजता सुरक्षित' }}
+    </div>
+
+    {% if lang == 'en' %}
+    <h1>Check your documents before you apply.<br><span class="animate-gradient-text">Not after you get rejected.</span></h1>
+    <p class="lead">Most people miss out on government schemes simply because they don't know they exist, or their application gets rejected over a small document mistake nobody warned them about. We help with both.</p>
+    {% else %}
+    <h1>अपने दस्तावेज़ आवेदन करने से पहले जांच लें।<br><span class="animate-gradient-text">अस्वीकृत होने के बाद नहीं।</span></h1>
+    <p class="lead">बहुत से लोग सरकारी योजनाओं का लाभ इसलिए नहीं ले पाते क्योंकि उन्हें पता ही नहीं होता कि ये मौजूद हैं, या फिर उनका आवेदन किसी छोटी-सी दस्तावेज़ गलती की वजह से अस्वीकृत हो जाता है जिसकी उन्हें भनक तक नहीं थी। हम दोनों में मदद करते हैं।</p>
+    {% endif %}
+
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="{{ url_for('eligibility_questionnaire') }}" class="btn btn-primary">
+        {{ 'Check What I Qualify For' if lang == 'en' else 'मेरी पात्रता जांचें' }} &rarr;
+      </a>
+      <a href="{{ url_for('document_upload') }}" class="btn btn-secondary">
+        {{ 'Check My Documents' if lang == 'en' else 'मेरे दस्तावेज़ जांचें' }}
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-css-art fade-up delay-1">
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+    
+    <div class="glass-floating-card card-top">
+      <div style="background:#10B981; border-radius:50%; width:48px; height:48px; display:flex; align-items:center; justify-content:center; color:white;font-weight:700;">✓</div>
+      <div>
+        <strong style="display:block; font-size:1.15rem; color:var(--text-primary);">Aadhaar Match</strong>
+        <span style="color:var(--text-muted); font-size:0.9rem;">Pre-verified consistency</span>
+      </div>
+    </div>
+
+    <div class="glass-floating-card card-bottom">
+      <div style="background:#0EA5E9; border-radius:50%; width:48px; height:48px; display:flex; align-items:center; justify-content:center; color:white;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <div>
+        <strong style="display:block; font-size:1.15rem; color:var(--text-primary);">Income Cert.</strong>
+        <span style="color:var(--text-muted); font-size:0.9rem;">Format Consistent</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="path-cards fade-up delay-2">
+  <a href="{{ url_for('eligibility_questionnaire') }}" class="card path-card">
+    <div class="path-icon-wrapper">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    </div>
+    <h3>{{ 'Check What I Qualify For' if lang == 'en' else 'मेरी पात्रता जांचें' }}</h3>
+    <p style="margin-top:0.5rem;">{{ 'Answer a few simple questions and see every scheme you may be eligible for.' if lang == 'en' else 'कुछ आसान सवालों के जवाब दें और देखें कि आप किन-किन योजनाओं के लिए पात्र हो सकते हैं।' }}</p>
+  </a>
+
+  <a href="{{ url_for('document_upload') }}" class="card path-card">
+    <div class="path-icon-wrapper">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+    </div>
+    <h3>{{ 'Check My Documents' if lang == 'en' else 'मेरे दस्तावेज़ जांचें' }}</h3>
+    <p style="margin-top:0.5rem;">{{ 'Upload 2 to 4 documents and we will check if your name, date of birth, and address match before you submit them anywhere.' if lang == 'en' else '2 से 4 दस्तावेज़ अपलोड करें, हम जांचेंगे कि नाम, जन्म तिथि और पता आपस में मेल खाते हैं या नहीं, इससे पहले कि आप उन्हें कहीं जमा करें।' }}</p>
+  </a>
+
+  <a href="{{ url_for('rejection_decoder') }}" class="card path-card path-card-featured">
+    <span class="featured-badge">{{ 'What makes us different' if lang == 'en' else 'हमारी खासियत' }}</span>
+    <div class="path-icon-wrapper" style="color:#B45309;background:#FEF3C7;border-color:#FCD34D;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <h3>{{ 'My Application Was Rejected' if lang == 'en' else 'मेरा आवेदन अस्वीकृत हुआ' }}</h3>
+    <p style="margin-top:0.5rem;">{{ 'Paste your rejection notice. We will explain what it means in plain language and help you fix it or file a grievance.' if lang == 'en' else 'अपना अस्वीकृति नोटिस यहां पेस्ट करें। हम इसका मतलब आसान भाषा में समझाएंगे और आगे बढ़ने में मदद करेंगे या शिकायत दर्ज करने में सहायता करेंगे।' }}</p>
+  </a>
+</div>
+
+<div class="stat-strip">
+  <div><strong>{{ scheme_count }}</strong>{{ 'Government schemes covered' if lang == 'en' else 'सरकारी योजनाएं शामिल' }}</div>
+  <div><strong>2</strong>{{ 'Minutes to check eligibility' if lang == 'en' else 'मिनटों में पात्रता जांच' }}</div>
+  <div><strong>0</strong>{{ 'Documents stored after your check' if lang == 'en' else 'जांच के बाद दस्तावेज़ सुरक्षित नहीं रखे जाते' }}</div>
+</div>
+
+<section style="margin-top:5rem;">
+  <div class="card" style="background:var(--surface-subtle);border-left:6px solid var(--brand-primary);">
+    <span class="category-tag">{{ 'Why this is different' if lang == 'en' else 'यह अलग कैसे है' }}</span>
+    <p style="margin:0;font-size:1.15rem;color:var(--text-primary);line-height:1.7;">
+      {{ 'Portals like MyScheme already tell you whether you are eligible for a scheme. Yojana Ready picks up from there, catching the document mismatches that cause silent rejections, and helping you recover if a rejection happens anyway.' if lang == 'en' else 'MyScheme जैसे पोर्टल आपको बताते हैं कि आप पात्र हैं या नहीं। Yojana Ready वहां से आगे बढ़कर, आवेदन से पहले ही दस्तावेज़ों की उन गलतियों को पकड़ लेता है जो चुपचाप अस्वीकृति का कारण बनती हैं, और अस्वीकृति होने पर आगे बढ़ने में भी मदद करता है।' }}
+    </p>
+  </div>
+</section>
+
+<section style="margin-top:5rem;">
+  <h2 style="text-align:center;margin-bottom:2.5rem;">{{ 'Frequently Asked Questions' if lang == 'en' else 'अक्सर पूछे जाने वाले सवाल' }}</h2>
+  <div style="display:flex;flex-direction:column;gap:1.25rem;max-width:900px;margin:0 auto;">
+    <details>
+      <summary>{{ 'How does Yojana Ready address digital platform fragmentation?' if lang == 'en' else 'Yojana Ready डिजिटल प्लेटफॉर्म के बिखराव (fragmentation) को कैसे दूर करता है?' }}</summary>
+      <p>{{ 'Government services are often siloed across separate portals for identity, income proofs, and scheme applications. Yojana Ready acts as an interoperable bridge, cross-auditing documents from different sources to ensure seamless consistency before you apply.' if lang == 'en' else 'सरकारी सेवाएं अक्सर पहचान, आय प्रमाण और योजना आवेदन के लिए अलग-अलग पोर्टलों में बंटी होती हैं। Yojana Ready एक सेतु (bridge) की तरह काम करता है, जो आवेदन से पहले ही अलग-अलग स्रोतों के दस्तावेज़ों की एक-दूसरे से जांच करके निरंतरता (consistency) सुनिश्चित करता है।' }}</p>
+    </details>
+    <details>
+      <summary>{{ 'How do you bridge data between independent government systems?' if lang == 'en' else 'आप अलग-अलग सरकारी सिस्टम के बीच डेटा को कैसे जोड़ते हैं?' }}</summary>
+      <p>{{ 'Because disparate systems lack real-time interoperability, we use OCR extraction on our server to verify data fields (like Name and DOB) across your ID proofs and application forms, catching cross-system discrepancies instantly.' if lang == 'en' else 'क्योंकि अलग-अलग सिस्टम आपस में रीयल-टाइम में बात नहीं करते, इसलिए हम अपने सर्वर पर OCR तकनीक का उपयोग करके आपके पहचान प्रमाणों और फॉर्म के डेटा (जैसे नाम और जन्म तिथि) को आपस में तुरंत मिलाकर जांचते हैं।' }}</p>
+    </details>
+    <details>
+      <summary>{{ 'Do you store my identity data or cross-platform documents?' if lang == 'en' else 'क्या आप मेरा पहचान डेटा या अलग-अलग प्लेटफॉर्म के दस्तावेज़ सुरक्षित रखते हैं?' }}</summary>
+      <p>{{ 'No. Uploaded documents are held only in a temporary private folder on our server while they are being read, and are deleted the moment the check finishes. They are never saved to a database or shown to anyone. The name, date of birth and address read from them stay in your own browser session for your report and are not saved to our database. If you log in, only a short summary (scheme names and check results) is kept in your case file.' if lang == 'en' else 'नहीं। अपलोड किए गए दस्तावेज़ जांच के दौरान सर्वर पर एक अस्थायी, निजी फोल्डर में रहते हैं और जांच पूरी होते ही तुरंत हटा दिए जाते हैं। ये कभी डेटाबेस में सेव नहीं होते और किसी को नहीं दिखाए जाते। इनसे निकाला गया नाम, जन्म तिथि और पता सिर्फ आपके ब्राउज़र सेशन में रहता है। अगर आप लॉग इन करते हैं, तो सिर्फ एक छोटा सारांश (योजना के नाम और जांच के नतीजे) आपकी केस फ़ाइल में रखा जाता है।' }}</p>
+    </details>
+    <details>
+      <summary>{{ 'Is this an official replacement for fragmented government portals?' if lang == 'en' else 'क्या यह अलग-अलग सरकारी पोर्टलों का आधिकारिक विकल्प है?' }}</summary>
+      <p>{{ 'No, this is an independent interoperability prototype built to solve citizen pain points caused by fragmented service delivery. Always submit your final applications through official government channels use this as complementary service to make tasks easier' if lang == 'en' else 'नहीं, यह बिखरी हुई सेवाओं की समस्या को हल करने के लिए बनाया गया एक स्वतंत्र प्रोटोटाइप है। अपना अंतिम आवेदन हमेशा आधिकारिक सरकारी माध्यम से ही जमा करें; इसे एक सहायक सेवा के रूप में इस्तेमाल करें।' }}</p>
+    </details>
+  </div>
+</section>
+
+<section class="card" style="margin-top:6rem;background:var(--brand-gradient);color:white;text-align:center;padding:4rem 2rem;border:none;">
+  <h2 style="color:white;margin:0 0 1rem 0;font-size:2.8rem;">{{ 'Verify Your Scheme Application Today' if lang == 'en' else 'आज ही अपना आवेदन जांचें' }}</h2>
+  <p style="color:rgba(255,255,255,0.9);max-width:600px;margin:0 auto 2.5rem;font-size:1.2rem;">
+    {{ 'Stop wondering if your paperwork has a disqualifying error. Get reassurance in under 2 minutes.' if lang == 'en' else 'यह सोचना बंद करें कि आपके कागज़ों में कोई गलती तो नहीं। 2 मिनट से भी कम समय में निश्चिंत हो जाएं।' }}
+  </p>
+  <div style="display:flex;gap:1.25rem;justify-content:center;flex-wrap:wrap;">
+    <a href="{{ url_for('eligibility_questionnaire') }}" class="btn" style="background:#fff;color:var(--brand-primary);box-shadow:0 10px 25px rgba(0,0,0,0.2);">
+      {{ 'Check My Eligibility' if lang == 'en' else 'पात्रता जांचें' }}
+    </a>
+    <a href="{{ url_for('document_upload') }}" class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.4);">
+      {{ 'Check My Documents' if lang == 'en' else 'दस्तावेज़ जांचें' }}
+    </a>
+  </div>
+</section>
+
+{% endblock %}

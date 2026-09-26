@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Check Eligibility - Yojana Ready{% endblock %}
+{% block content %}
+{% set nxt %}{{ 'Next' if lang == 'en' else 'आगे' }}{% endset %}
+{% set back %}{{ 'Back' if lang == 'en' else 'पीछे' }}{% endset %}
+{% set pick %}{{ '• Select •' if lang == 'en' else '• चुनें •' }}{% endset %}
+<div class="card fade-up" style="max-width:720px;margin:0 auto;">
+  <span class="category-tag">{{ 'Step 1 of 3' if lang == 'en' else 'चरण 1 में से 3' }}</span>
+  <h1>{{ 'Check What You Qualify For' if lang == 'en' else 'पात्रता जांचें' }}</h1>
+  <p class="hint" style="margin-bottom:2rem;font-size:1.05rem;">{{ 'Just 7 quick questions. Your answers stay in your own browser session and are not saved to our database.' if lang == 'en' else 'सिर्फ 7 आसान सवाल। आपके जवाब सिर्फ आपके ब्राउज़र सेशन में रहते हैं, हमारे डेटाबेस में सेव नहीं होते।' }}</p>
+
+  {% if error %}<div class="overall-banner mismatch" role="alert">{{ error }}</div>{% endif %}
+
+  <div class="progress-bar" role="progressbar">
+    {% for i in range(7) %}<div class="progress-seg"></div>{% endfor %}
+  </div>
+
+  <form method="POST" action="{{ url_for('eligibility_questionnaire') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="q-step visible">
+      <div class="form-group">
+        <label>{{ '1. What is your age?' if lang == 'en' else '1. आपकी उम्र क्या है?' }}</label>
+        <p class="hint">{{ 'Enter your age in completed years.' if lang == 'en' else 'अपनी उम्र पूरे वर्षों में लिखें।' }}</p>
+        <input type="number" name="age" min="0" max="120" step="1" required placeholder="e.g. 21" value="{{ prev.get('age', '') }}">
+      </div>
+      <div class="step-nav"><span></span><button type="button" class="btn btn-primary next-btn">{{ nxt }} &rarr;</button></div>
+    </div>
+
+    <div class="q-step">
+      <div class="form-group">
+        <label>{{ '2. What is your annual family income?' if lang == 'en' else '2. आपके परिवार की सालाना आय कितनी है?' }}</label>
+        <p class="hint">{{ 'Total yearly income of your family, in rupees. A rough estimate is fine.' if lang == 'en' else 'आपके पूरे परिवार की सालाना आय, रुपयों में। एक अनुमानित आंकड़ा भी ठीक है।' }}</p>
+        <input type="number" name="income" min="0" step="1" required placeholder="e.g. 180000" value="{{ prev.get('income', '') }}">
+      </div>
+      <div class="step-nav"><button type="button" class="btn btn-outline back-btn">&larr; {{ back }}</button><button type="button" class="btn btn-primary next-btn">{{ nxt }} &rarr;</button></div>
+    </div>
+
+    <div class="q-step">
+      <div class="form-group">
+        <label>{{ '3. What is your gender?' if lang == 'en' else '3. आपका लिंग क्या है?' }}</label>
+        <div class="radio-group">
+          <label class="radio-pill"><input type="radio" name="gender" value="male" required {{ 'checked' if prev.get('gender') == 'male' }}>{{ 'Male' if lang == 'en' else 'पुरुष' }}</label>
+          <label class="radio-pill"><input type="radio" name="gender" value="female" {{ 'checked' if prev.get('gender') == 'female' }}>{{ 'Female' if lang == 'en' else 'महिला' }}</label>
+          <label class="radio-pill"><input type="radio" name="gender" value="other" {{ 'checked' if prev.get('gender') == 'other' }}>{{ 'Other' if lang == 'en' else 'अन्य' }}</label>
+        </div>
+      </div>
+      <div class="step-nav"><button type="button" class="btn btn-outline back-btn">&larr; {{ back }}</button><button type="button" class="btn btn-primary next-btn">{{ nxt }} &rarr;</button></div>
+    </div>
+
+    <div class="q-step">
+      <div class="form-group">
+        <label>{{ '4. Which state or union territory do you live in?' if lang == 'en' else '4. आप किस राज्य या केंद्र शासित प्रदेश में रहते हैं?' }}</label>
+        <p class="hint">{{ 'Some schemes are run only by a particular state. Central schemes are available everywhere.' if lang == 'en' else 'कुछ योजनाएं सिर्फ एक राज्य में ही चलती हैं। केंद्रीय योजनाएं हर जगह उपलब्ध होती हैं।' }}</p>
+        <select name="state" required>
+          <option value="" disabled {{ 'selected' if not prev.get('state') }}>{{ pick }}</option>
+          {% for st in states %}
+          <option value="{{ st }}" {{ 'selected' if prev.get('state') == st }}>{{ st }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="step-nav"><button type="button" class="btn btn-outline back-btn">&larr; {{ back }}</button><button type="button" class="btn btn-primary next-btn">{{ nxt }} &rarr;</button></div>
+    </div>
+
+    <div class="q-step">
+      <div class="form-group">
+        <label>{{ '5. What best describes your occupation?' if lang == 'en' else '5. आपका व्यवसाय क्या है?' }}</label>
+        <select name="occupation" required>
+          <option value="" disabled {{ 'selected' if not prev.get('occupation') }}>{{ pick }}</option>
+          {% for code, label in occupations.items() %}
+          <option value="{{ code }}" {{ 'selected' if prev.get('occupation') == code }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="step-nav"><button type="button" class="btn btn-outline back-btn">&larr; {{ back }}</button><button type="button" class="btn btn-primary next-btn">{{ nxt }} &rarr;</button></div>
+    </div>
+
+    <div class="q-step">
+      <div class="form-group">
+        <label>{{ '6. How do you work?' if lang == 'en' else '6. आप किस तरह काम करते हैं?' }}</label>
+        <p class="hint">{{ 'Schemes like EPF and ESI are only for people with a registered employer, so this matters.' if lang == 'en' else 'EPF और ESI जैसी योजनाएं सिर्फ रजिस्टर्ड नियोक्ता (employer) वाले लोगों के लिए हैं, इसलिए यह सवाल ज़रूरी है।' }}</p>
+        <select name="employment" required>
+          <option value="" disabled {{ 'selected' if not prev.get('employment') }}>{{ pick }}</option>
+          {% for code, label in employment_types.items() %}
+          <option value="{{ code }}" {{ 'selected' if prev.get('employment') == code }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="step-nav"><button type="button" class="btn btn-outline back-btn">&larr; {{ back }}</button><button type="button" class="btn btn-primary next-btn">{{ nxt }} &rarr;</button></div>
+    </div>
+
+    <div class="q-step">
+      <div class="form-group">
+        <label>{{ '7. Which of these apply to you?' if lang == 'en' else '7. इनमें से कौन-कौन सी बातें आप पर लागू होती हैं?' }}</label>
+        <p class="hint">{{ 'Tick every one that applies. You can tick several. If none apply, leave all unticked (General).' if lang == 'en' else 'जो भी लागू हो, वे सभी चुनें। एक से ज़्यादा भी चुन सकते हैं। कुछ भी लागू न हो तो खाली छोड़ दें (सामान्य/General)।' }}</p>
+        <div class="radio-group">
+          {% for code, label in categories.items() %}
+          <label class="radio-pill"><input type="checkbox" name="categories" value="{{ code }}" {{ 'checked' if code in prev.get('categories', []) }}>{{ label }}</label>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="step-nav"><button type="button" class="btn btn-outline back-btn">&larr; {{ back }}</button><button type="submit" class="btn btn-primary">{{ 'See My Schemes' if lang == 'en' else 'मेरी योजनाएं देखें' }} &rarr;</button></div>
+    </div>
+  </form>
+</div>
+{% endblock %}
