@@ -4,9 +4,13 @@ Yojana ready single point of access for government welfare schemes, so citizens 
 
 **Smart India Hackathon 2026**
 Problem Statement ID: SIH26129
+
 Problem Statement Title: System integration and interoperability among government digital platforms, resulting in fragmented service delivery
+
 Theme: Smart Automation
+
 Category: Software
+
 Institution: Guru Tegh Bahadur Institute of Technology (GTBIT), Rajouri Garden, New Delhi
 
 
@@ -22,27 +26,27 @@ Institution: Guru Tegh Bahadur Institute of Technology (GTBIT), Rajouri Garden, 
 
 ## The Problem
 
-Citizens today have to move across several separate government platforms just to apply for a single welfare scheme, one portal to discover the scheme, another to check eligibility and no platform at all once an application gets rejected. This fragmentation is exactly what our assigned problem statement points to. Most rejections do not even happen because a citizen is ineligible. They happen because of small, avoidable document errors such as a name spelled differently across Aadhaar and an income certificate or a document that was never explained clearly enough. Once rejected, a citizen is left with a short notice and no real next step.
+Citizens today have to move across several separate government platforms just to apply for a single welfare scheme, one portal to discover the scheme another to check eligibility and no platform at all once an application gets rejected. This fragmentation is exactly what our assigned problem statement points to. Most rejections do not even happen because a citizen is ineligible. They happen because of small avoidable document errors such as a name spelled differently across Aadhaar and an income certificate or a document that was never explained clearly enough. Once rejected, a citizen is left with a short notice and no real next step.
 
 ## Our Solution
 
-Yojana Ready brings scheme discovery, document verification, and rejection recovery into one platform, instead of leaving a citizen to figure out which of several government websites is supposed to help at each stage. It does not try to replace portals like MyScheme or UMANG, which already handle scheme discovery well. It picks up exactly where they stop, catching document errors before submission, and guiding a citizen through what to do after a rejection to complement those and easy navigations
+Yojana Ready brings scheme discovery, document verification, and rejection recovery into one platform, instead of leaving a citizen to figure out which of several government websites is supposed to help at each stage. It does not try to replace portals like MyScheme or UMANG which already handle scheme discovery well. It picks up exactly where they stop, catching document errors before submission and guiding a citizen through what to do after a rejection to complement those and easy navigations
 
 ## Key Features
 
-- **Eligibility Checker**: a rule-based engine that matches a citizen's age, income, occupation, gender, work arrangement, state and category (multiple categories at once, e.g. SC + BPL) against 90 real government schemes -- 80 central schemes plus 10 state-specific schemes (7 Maharashtra, 3 from Uttar Pradesh/Rajasthan/Tamil Nadu), sourced and cross-checked from myscheme.gov.in, MahaDBT, Aaple Sarkar, and the concerned ministries and state departments -- and explains in plain language why they matched or came close. State-specific schemes are filtered by the citizen's state; central schemes are shown regardless of state.
-- **Document Consistency Checker**: reads uploaded documents (JPG, PNG, or PDF) using real OCR and checks name, date of birth, and address across up to four documents at once. It gives an Application Readiness Score and tells the citizen which document to correct first.
-- **Rejection Decoder**: a citizen who has already been rejected can paste the rejection notice they received. The system identifies the likely reason (document mismatch, missing document, ineligibility, income limit, missed deadline, or a duplicate claim) and gives step by step guidance to fix it. If the reason cannot be confidently identified, it says so honestly rather than guessing and guides you through CPGRAMS.
-- **Grievance Draft Assistant**: if a citizen believes their rejection was wrong, this feature auto-drafts a formal grievance letter using their case details (name, scheme, application reference, and reason) and links directly to CPGRAMS, the actual Centralised Public Grievance Redress and Monitoring System operated by the Government of India (pgportal.gov.in) The citizen reviews and edits the draft themselves before submitting it. Nothing is ever submitted on their behalf.
-- **Case File**: ties the eligibility check, document check, and rejection recovery into a single record per citizen, downloadable as a plain text summary for the records.
-- **User Accounts**: registration and login with hashed passwords, rate-limited against repeated failed attempts, so a logged-in citizen's Case File is saved to the database and stays available across sessions and devices. Accounts and case files are stored in an external PostgreSQL database (via `DATABASE_URL`) when configured, so they survive redeploys on hosts with an ephemeral filesystem, such as Render's free tier.
+- **Eligibility Checker**: a rule-based engine that matches a citizen's age, income, occupation, gender, work arrangement, state and category (multiple categories at once, e.g. SC + BPL) against 90 real government schemes,80 central schemes plus 10 state-specific schemes (7 Maharashtra, 3 from Uttar Pradesh/Rajasthan/Tamil Nadu) sourced and cross-checked from myscheme.gov.in, MahaDBT, Aaple Sarkar, and the concerned ministries and state departments and explains in plain language why they matched or came close. State-specific schemes are filtered by the citizen's state.
+- **Document Consistency Checker**: reads uploaded documents (JPG, PNG, or PDF) using real OCR and checks name, date of birth and address across up to four documents at once. It gives an Application Readiness Score and tells the citizen what all documents are needed or which document to correct first (scheme specific documents)
+- **Rejection Decoder**: a citizen who has already been rejected can paste the rejection notice they received. The system identifies the likely reason (document mismatch, missing document, ineligibility, income limit, missed deadline or a duplicate claim) and gives step by step guidance to fix it. If the reason cannot be confidently identified it says so honestly rather than guessing and guides you through CPGRAMS.
+- **Grievance Draft Assistant**: if a citizen believes their rejection was wrong this feature auto-drafts a formal grievance letter using their case details (name, scheme, application reference, and reason) and links directly to CPGRAMS, the actual Centralised Public Grievance Redress and Monitoring System operated by the Government of India (pgportal.gov.in) The citizen reviews and edits the draft themselves before submitting it. Nothing is ever submitted on their behalf.
+- **Case File**: ties the eligibility check, document check, and rejection recovery into a single record per citizen, downloadable as a plain text summary for the records for further use
+- **User Accounts**: registration and login with hashed passwords, rate-limited against repeated failed attempts, so a logged-in citizen's Case File is saved to the database and stays available across sessions and devices. Accounts and case files are stored in an external PostgreSQL database (via `DATABASE_URL`) when configured so they survive redeploys on hosts with an ephemeral filesystem, such as Render's free tier.
 - **Scheme Assistant Chatbot**: a rule-based assistant that answers from the verified scheme database only. It supports category based questions such as "schemes for farmers" or "schemes for women" and refuses to answer anything outside its scope rather than guessing.
 - **Voice Input**: free browser based voice input on the chatbot and the rejection notice field so a citizen can speak instead of type.
 - **Bilingual Interface**: English and Hindi toggle across the site.
 
 ## Technical Approach
 
-- **Backend**: Flask (Python). The 90-scheme catalogue is rebuilt from `data/schemes_data.py` into a local SQLite file on every startup (it is read-only reference data, not user data, so losing it on redeploy is harmless). User accounts and case files go to an external PostgreSQL database when `DATABASE_URL` is set (see "Persistent Accounts" below); without it, they fall back to the same local SQLite file for zero-setup local development.
+- **Backend**: Flask (Python). The 90-scheme catalogue is rebuilt from `data/schemes_data.py` into a local SQLite file on every startup (it is read-only reference data, not user data so losing it on redeploy is harmless). User accounts and case files go to an external PostgreSQL database when `DATABASE_URL` is set (see "Persistent Accounts" below); without it, they fall back to the same local SQLite file for zero-setup local development.
 - **Document OCR**: Tesseract accessed through pytesseract which reads text directly from uploaded document images. PDF uploads are converted to an image using PyMuPDF before the same OCR step runs so both file types go through one consistent pipeline. Field extraction uses label-based text parsing (looking for patterns like "Name:", "DOB:", "Address:") which works reliably for the structured sample documents included in this project. Fully unstructured, arbitrary real-world document layouts would need a more advanced extraction approach, which is future scope rather than something we are claiming is already solved.
 - **Document Matching**: extracted fields are compared using fuzzy string matching (Python's difflib) with a tuned similarity threshold so that a real mismatch is caught while small OCR noise is not wrongly flagged.
 - **Eligibility Logic**: a plain rule based engine not machine learning. Every match or near miss can be traced back to a specific rule which keeps the result explainable rather than a black box.
