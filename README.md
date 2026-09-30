@@ -17,7 +17,7 @@ Institution: Guru Tegh Bahadur Institute of Technology (GTBIT), Rajouri Garden, 
 ## Team Name: "Tech Maniacs"
 | Name | Role |
 |---|---|
-| Ravneet Kaur | Team Leader — Planning + Executor, Worked on website changes or alters |
+| Ravneet Kaur | Team Leader, Planning + Executor, Worked on website changes or alters |
 | Taranpreet Kaur | Research Features, Tester, Deployer, Backend |
 | Anisha | Research & Testing Features |
 | Bhanu Pratap | PPT, Presentation of the whole Idea and Pitching |
