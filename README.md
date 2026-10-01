@@ -7,8 +7,6 @@ Problem Statement ID: SIH26129
 
 Problem Statement Title: System integration and interoperability among government digital platforms, resulting in fragmented service delivery
 
-Theme: Smart Automation
-
 Category: Software
 
 Institution: Guru Tegh Bahadur Institute of Technology (GTBIT), Rajouri Garden, New Delhi
